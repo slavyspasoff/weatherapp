@@ -10,9 +10,11 @@ import {
   Unit,
 } from '../styles/Navbar.styles';
 import { ChangeEventHandler } from 'react';
-interface Props {}
+interface Props {
+  toggleTheme: () => void;
+}
 
-const Navbar = (props: Props) => {
+const Navbar = ({ toggleTheme }: Props) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [tempUnit, setTempUnit] = useState<'f' | 'c'>('c');
 
@@ -27,7 +29,7 @@ const Navbar = (props: Props) => {
   return (
     <AppBar>
       <Root>
-        <Box sx={{ display: 'flex', gap: '2rem' }}>
+        <Box sx={{ display: 'flex', gap: '2rem' }} onClick={() => toggleTheme()}>
           <WbSunnyTwoTone />
           <Typography variant='overline' component='h2'>
             Weather App
