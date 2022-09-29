@@ -33,4 +33,33 @@ const InputBase = styled(_InputBase)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-export { AppBar, Root, SearchContainer, InputBase };
+const UnitContainer = styled('div')(({ theme }) => ({
+  borderRadius: '1em',
+  height: '1.25rem',
+  width: '5rem',
+  // paddingBlock: theme.spacing(0.25),
+
+  overflow: 'hidden',
+  boxSizing: 'border-box',
+  backgroundColor: alpha(theme.palette.common.white, 0.95),
+}));
+
+interface UnitProps {
+  selected: boolean;
+}
+
+const Unit = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'selected',
+})<UnitProps>(({ theme, selected }) => ({
+  color: selected ? theme.palette.common.white : theme.palette.common.black,
+  display: 'inline-block',
+  textAlign: 'center',
+  height: '100%',
+  fontSize: '0.9rem',
+  width: '50%',
+  cursor: 'pointer',
+  transition: 'background-color 0.5s linear, color 0.5s linear',
+  backgroundColor: selected ? theme.palette.info.dark : 'transparent',
+}));
+
+export { AppBar, Root, SearchContainer, InputBase, UnitContainer, Unit };
