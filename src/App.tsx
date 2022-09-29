@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
+import Main from './components/Main';
 function App() {
   const [data, setData] = useState<object>({});
   useEffect(() => {
@@ -8,7 +9,12 @@ function App() {
       setData(req.current);
     })();
   }, []);
-  return <Navbar />;
+  return (
+    <>
+      <Navbar />
+      <Main />
+    </>
+  );
 }
 
 export default App;

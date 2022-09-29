@@ -4,7 +4,7 @@ import { AppBar as _AppBar, Container, InputBase as _InputBase } from '@mui/mate
 const AppBar = styled(_AppBar)(({ theme }) => ({
   padding: theme.spacing(2),
   backgroundColor: theme.palette.grey[900],
-  minHeight: '7.5vh',
+  height: '7.5vh',
 }));
 
 const Root = styled(Container)(({ theme }) => ({
@@ -35,10 +35,8 @@ const InputBase = styled(_InputBase)(({ theme }) => ({
 
 const UnitContainer = styled('div')(({ theme }) => ({
   borderRadius: '1em',
-  height: '1.25rem',
+  height: '1.5rem',
   width: '5rem',
-  // paddingBlock: theme.spacing(0.25),
-
   overflow: 'hidden',
   boxSizing: 'border-box',
   backgroundColor: alpha(theme.palette.common.white, 0.95),
@@ -55,7 +53,6 @@ const Unit = styled('span', {
   display: 'inline-block',
   textAlign: 'center',
   height: '100%',
-  fontSize: '0.9rem',
   width: '50%',
   cursor: 'pointer',
   transition: 'background-color 0.5s linear, color 0.5s linear',
