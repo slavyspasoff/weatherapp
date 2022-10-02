@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Main from './components/Main';
 
@@ -23,7 +24,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Navbar toggleTheme={toggleTheme} />
-      <Main />
+      <Routes>
+        <Route path='/' element={<Main />} />
+      </Routes>
     </ThemeProvider>
   );
 }
