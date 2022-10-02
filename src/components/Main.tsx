@@ -1,19 +1,17 @@
-import {
-  Root,
-  LeftMainContainer,
-  RightMainContainer,
-  MainCard,
-} from '../styles/Main.styles';
+import MainCard from './MainCard';
+import MainContainer from './MainContainer';
+import { Root } from '../styles/Main.styles';
 interface Props {}
+
 const Main = (props: Props) => {
   return (
     <Root>
-      <LeftMainContainer>
+      <MainContainer>
         <MainCard></MainCard>
-      </LeftMainContainer>
-      <RightMainContainer>
+      </MainContainer>
+      <MainContainer>
         <MainCard></MainCard>
-      </RightMainContainer>
+      </MainContainer>
     </Root>
   );
 };

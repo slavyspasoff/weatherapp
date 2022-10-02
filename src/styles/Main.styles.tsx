@@ -1,5 +1,4 @@
 import { styled, alpha } from '@mui/material/styles';
-import { Box } from '@mui/material';
 
 const Root = styled('main')(({ theme }) => ({
   display: 'grid',
@@ -18,24 +17,4 @@ const Root = styled('main')(({ theme }) => ({
   backgroundColor: alpha(theme.palette.common.white, 0.05),
 }));
 
-const MainContainers = {
-  padding: '1.25rem',
-};
-
-const LeftMainContainer = styled(Box)(({ theme }) => ({
-  ...MainContainers,
-}));
-
-const MainCard = styled(Box)(({ theme }) => ({
-  height: '250px',
-  width: '100%',
-  borderRadius: '1rem',
-  backgroundColor: alpha(theme.palette.common.white, 0.25),
-}));
-
-const RightMainContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.black, 0.15),
-  ...MainContainers,
-}));
-
-export { Root, LeftMainContainer, RightMainContainer, MainCard };
+export { Root };
