@@ -28,7 +28,7 @@ const Index = ({ data }: Props) => {
             {data.timezone} As of {timeNow.getHours()}:{timeNow.getMinutes()}{' '}
           </Typography>
         </Box>
-        <Box>{Math.round(data.current.temp - 273.15)} &#8451;</Box>
+        <Box>{Math.round(data.current?.temp - 273.15)} &#8451;</Box>
       </MainCard>
     </MainContainer>
   );

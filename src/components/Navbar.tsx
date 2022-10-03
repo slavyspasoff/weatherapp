@@ -29,7 +29,10 @@ const Navbar = ({ toggleTheme }: Props) => {
   return (
     <AppBar>
       <Root>
-        <Box sx={{ display: 'flex', gap: '2rem' }} onClick={() => toggleTheme()}>
+        <Box
+          sx={{ display: 'flex', gap: '2rem', alignItems: 'center' }}
+          onClick={() => toggleTheme()}
+        >
           <WbSunnyTwoTone />
           <Typography variant='overline' component='h2'>
             Weather App
