@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Main from './components/Main';
 
@@ -18,15 +17,13 @@ function App() {
   useEffect(() => {
     (async () => {
       const req = await import('./data.json');
-      setData(req.current);
+      setData(req.default);
     })();
   }, []);
   return (
     <ThemeProvider theme={theme}>
       <Navbar toggleTheme={toggleTheme} />
-      <Routes>
-        <Route path='/' element={<Main />} />
-      </Routes>
+      <Main data={data} />
     </ThemeProvider>
   );
 }

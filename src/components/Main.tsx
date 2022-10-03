@@ -1,17 +1,16 @@
-import MainCard from './MainCard';
-import MainContainer from './MainContainer';
+import Index from './Index';
 import { Root } from '../styles/Main.styles';
-interface Props {}
+import { Route, Routes } from 'react-router-dom';
+interface Props {
+  data: any;
+}
 
-const Main = (props: Props) => {
+const Main = ({ data }: Props) => {
   return (
     <Root>
-      <MainContainer>
-        <MainCard></MainCard>
-      </MainContainer>
-      <MainContainer>
-        <MainCard></MainCard>
-      </MainContainer>
+      <Routes>
+        <Route path='/' element={<Index data={data} />} />
+      </Routes>
     </Root>
   );
 };
