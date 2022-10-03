@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { type WeatherData } from './types/DataType';
+import fetchData from './helpers/fetchData';
 import Navbar from './components/Navbar';
 import Main from './components/Main';
+import KEY from '../API_KEY';
+
+const BASEURL = 'https://api.openweathermap.org';
+const lat = 52.52;
+const lon = 13.84;
 
 function App() {
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
@@ -13,9 +20,13 @@ function App() {
       mode: themeMode,
     },
   });
-  const [data, setData] = useState<object>({});
+  const [data, setData] = useState<WeatherData>({} as WeatherData);
   useEffect(() => {
-    (async () => {})();
+    (async () => {
+      setData(
+        await fetchData(`${BASEURL}/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${KEY}`)
+      );
+    })();
   }, []);
   return (
     <ThemeProvider theme={theme}>

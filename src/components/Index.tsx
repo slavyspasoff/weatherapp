@@ -2,15 +2,15 @@ import MainCard from './MainCard';
 import MainContainer from './MainContainer';
 import { Box, alpha, Typography } from '@mui/material';
 import {} from '../styles/Index.styles';
+import { type WeatherData } from '../types/DataType';
 interface Props {
-  data: any;
+  data: WeatherData;
 }
 
 const BACKGROUND_IMG_URL = 'https://images.unsplash.com/photo-1483702721041-b23de737a886';
 
 const Index = ({ data }: Props) => {
   const timeNow = new Date(data.current?.dt * 1000);
-  console.log(data);
   return (
     <MainContainer>
       <MainCard backgroundImage={BACKGROUND_IMG_URL}>
