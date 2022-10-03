@@ -15,10 +15,7 @@ function App() {
   });
   const [data, setData] = useState<object>({});
   useEffect(() => {
-    (async () => {
-      const req = await import('./data.json');
-      setData(req.default);
-    })();
+    (async () => {})();
   }, []);
   return (
     <ThemeProvider theme={theme}>
