@@ -2,7 +2,7 @@ import MainCard from './MainCard';
 import MainContainer from './MainContainer';
 import { Box, alpha, Typography } from '@mui/material';
 import {} from '../styles/Index.styles';
-import { type WeatherData } from '../types/DataType';
+import { type WeatherData } from '../types/WeatherDataType';
 interface Props {
   data: WeatherData;
 }
