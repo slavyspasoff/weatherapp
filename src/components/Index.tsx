@@ -10,7 +10,6 @@ interface Props {
 const BACKGROUND_IMG_URL = 'https://images.unsplash.com/photo-1483702721041-b23de737a886';
 
 const Index = ({ data }: Props) => {
-  const timeNow = new Date(data.current?.dt * 1000);
   return (
     <MainContainer>
       <MainCard backgroundImage={BACKGROUND_IMG_URL}>
@@ -25,10 +24,11 @@ const Index = ({ data }: Props) => {
           })}
         >
           <Typography variant='body1' sx={{}}>
-            {data.timezone} As of {timeNow.getHours()}:{timeNow.getMinutes()}{' '}
+            {data?.city?.name} {data?.city?.country} as of{' '}
+            {new Date(data?.list[0]?.dt_txt).toString()}
           </Typography>
         </Box>
-        <Box>{Math.round(data.current?.temp - 273.15)} &#8451;</Box>
+        <Box>{Math.round(data?.list[0]?.main?.temp - 273.15)} &#8451;</Box>
       </MainCard>
     </MainContainer>
   );

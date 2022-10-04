@@ -34,6 +34,7 @@ function App() {
           const d = await fetchData(
             `${BASEURL}/data/2.5/forecast?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&appid=${KEY}`
           );
+          console.log(d);
           setData(d as WeatherData);
           //TODO: ADD CUSTOM ERROR
         } catch (err) {}
