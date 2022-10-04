@@ -26,11 +26,20 @@ interface Props {
   toggleTheme: () => void;
   fetchedCityList: CitiesData;
   setFetchedCityList: (v: CitiesData) => void;
+  //TODO: Make a global LocationCoordType
+  locationCoord: { lat: number; lon: number };
+  setLocationCoord: (v: { lat: number; lon: number }) => void;
 }
 
 const BASEURL = 'https://api.openweathermap.org';
 
-const Navbar = ({ toggleTheme, fetchedCityList, setFetchedCityList }: Props) => {
+const Navbar = ({
+  toggleTheme,
+  fetchedCityList,
+  setFetchedCityList,
+  locationCoord,
+  setLocationCoord,
+}: Props) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [tempUnit, setTempUnit] = useState<'f' | 'c'>('c');
 
@@ -89,34 +98,41 @@ const Navbar = ({ toggleTheme, fetchedCityList, setFetchedCityList }: Props) => 
             />
             <Search />
           </SearchContainer>
-          <List
-            sx={(theme) => ({
-              position: 'absolute',
-              top: '3rem',
-              width: '100%',
-              backgroundColor: theme.palette.grey[800],
-              borderRadius: '1rem',
-              overflow: 'hidden',
-            })}
-          >
-            {fetchedCityList.map((city, idx) => (
-              <>
-                <ListItem
-                  sx={(theme) => ({
-                    cursor: 'pointer',
-                    '&:hover': {
-                      backgroundColor: theme.palette.grey[900],
-                    },
-                  })}
-                >
-                  <ListItemText>
-                    {city.name} {city.country} {city.state ?? city.state}
-                  </ListItemText>
-                </ListItem>
-                {idx < fetchedCityList.length - 1 && <Divider />}
-              </>
-            ))}
-          </List>
+          {fetchedCityList.length > 0 && searchInputValue.length > 0 && (
+            <List
+              sx={(theme) => ({
+                position: 'absolute',
+                top: '3rem',
+                width: '100%',
+                backgroundColor: theme.palette.grey[800],
+                borderRadius: '1rem',
+                overflow: 'hidden',
+              })}
+            >
+              {fetchedCityList.map((city, idx) => (
+                <>
+                  <ListItem
+                    sx={(theme) => ({
+                      cursor: 'pointer',
+                      '&:hover': {
+                        backgroundColor: theme.palette.grey[900],
+                      },
+                    })}
+                    // TODO: Add handle function
+                    onClick={() => {
+                      setSearchInputValue('');
+                      setLocationCoord({ lat: city.lat, lon: city.lon });
+                    }}
+                  >
+                    <ListItemText>
+                      {city.name} {city.country} {city.state ?? city.state}
+                    </ListItemText>
+                  </ListItem>
+                  {idx < fetchedCityList.length - 1 && <Divider />}
+                </>
+              ))}
+            </List>
+          )}
         </Box>
 
         <UnitContainer>

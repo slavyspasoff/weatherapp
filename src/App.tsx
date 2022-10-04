@@ -8,7 +8,7 @@ import Main from './components/Main';
 import KEY from '../API_KEY';
 
 const BASEURL = 'https://api.openweathermap.org';
-interface Location {
+interface LocationCoord {
   lat: number;
   lon: number;
 }
@@ -16,7 +16,7 @@ interface Location {
 function App() {
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
-  const [location, setLocation] = useState<Location>({} as Location);
+  const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
   const [fetchedCityList, setFetchedCityList] = useState<CitiesData>([] as CitiesData);
 
   const toggleTheme = () => {
@@ -28,24 +28,25 @@ function App() {
     },
   });
   useEffect(() => {
-    if (location.lat && location.lon)
+    if (locationCoord.lat && locationCoord.lon)
       (async () => {
         try {
-          setData(
-            await fetchData(
-              `${BASEURL}/data/2.5/forecast?lat=${location?.lat}&lon=${location?.lon}&appid=${KEY}`
-            )
+          const d = await fetchData(
+            `${BASEURL}/data/2.5/forecast?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&appid=${KEY}`
           );
+          setData(d as WeatherData);
           //TODO: ADD CUSTOM ERROR
         } catch (err) {}
       })();
-  }, []);
+  }, [locationCoord]);
   return (
     <ThemeProvider theme={theme}>
       <Navbar
         toggleTheme={toggleTheme}
         fetchedCityList={fetchedCityList}
         setFetchedCityList={setFetchedCityList}
+        locationCoord={locationCoord}
+        setLocationCoord={setLocationCoord}
       />
       <Main data={data} />
     </ThemeProvider>
