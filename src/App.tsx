@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { type WeatherData } from './types/WeatherDataType';
 import { type CitiesData } from './types/CitiesDataType';
 import fetchData from './helpers/fetchData';
+import getBrowserCoordinates from './helpers/getBrowserCoordinates';
 import Navbar from './components/Navbar';
 import Main from './components/Main';
 import KEY from '../API_KEY';
@@ -27,6 +28,16 @@ function App() {
       mode: themeMode,
     },
   });
+  useEffect(() => {
+    (async () => {
+      try {
+        const { coords }: { coords: GeolocationCoordinates } =
+          (await getBrowserCoordinates()) as GeolocationPosition;
+        setLocationCoord({ lat: coords.latitude, lon: coords.longitude });
+        //TODO: Add error handler
+      } catch (err) {}
+    })();
+  }, []);
   useEffect(() => {
     if (locationCoord.lat && locationCoord.lon)
       (async () => {
