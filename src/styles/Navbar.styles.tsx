@@ -20,7 +20,7 @@ const SearchContainer = styled('div')(({ theme }) => ({
   alignItems: 'center',
   paddingInline: theme.spacing(2),
   paddingBlock: theme.spacing(0.75),
-  width: '40%',
+  width: '100%',
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },

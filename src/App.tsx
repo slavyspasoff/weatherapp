@@ -17,7 +17,7 @@ function App() {
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
   const [location, setLocation] = useState<Location>({} as Location);
-  const [fetchedCityList, setFetchedCityList] = useState<CitiesData>({} as CitiesData);
+  const [fetchedCityList, setFetchedCityList] = useState<CitiesData>([] as CitiesData);
 
   const toggleTheme = () => {
     setThemeMode((prev) => (prev === 'light' ? 'dark' : 'light'));

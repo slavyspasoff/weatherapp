@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  alpha,
+} from '@mui/material';
 import { WbSunnyTwoTone, Search } from '@mui/icons-material';
 import {
   AppBar,
@@ -71,15 +79,46 @@ const Navbar = ({ toggleTheme, fetchedCityList, setFetchedCityList }: Props) => 
             Weather App
           </Typography>
         </Box>
-        <SearchContainer>
-          <InputBase
-            value={searchInputValue}
-            onChange={handleSearchInputValueChange}
-            inputProps={{ 'aria-label': 'search' }}
-            placeholder='Search City or Zip Code'
-          />
-          <Search />
-        </SearchContainer>
+        <Box sx={{ position: 'relative', width: '40%' }}>
+          <SearchContainer>
+            <InputBase
+              value={searchInputValue}
+              onChange={handleSearchInputValueChange}
+              inputProps={{ 'aria-label': 'search' }}
+              placeholder='Search City or Zip Code'
+            />
+            <Search />
+          </SearchContainer>
+          <List
+            sx={(theme) => ({
+              position: 'absolute',
+              top: '3rem',
+              width: '100%',
+              backgroundColor: theme.palette.grey[800],
+              borderRadius: '1rem',
+              overflow: 'hidden',
+            })}
+          >
+            {fetchedCityList.map((city, idx) => (
+              <>
+                <ListItem
+                  sx={(theme) => ({
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: theme.palette.grey[900],
+                    },
+                  })}
+                >
+                  <ListItemText>
+                    {city.name} {city.country} {city.state ?? city.state}
+                  </ListItemText>
+                </ListItem>
+                {idx < fetchedCityList.length - 1 && <Divider />}
+              </>
+            ))}
+          </List>
+        </Box>
+
         <UnitContainer>
           <Unit selected={tempUnit === 'f'} onClick={toggleTempUnit}>
             &#8451;
