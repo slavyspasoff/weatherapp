@@ -1,22 +1,15 @@
 import { Box, styled, alpha } from '@mui/material';
 
-interface RootProps {
-  backgroundColor?: string;
-  backgroundImage?: string;
-}
+interface RootProps {}
 
 const Root = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'backgroundColor' && prop !== 'backgroundImage',
-})<RootProps>(({ theme, backgroundColor, backgroundImage }) => ({
-  height: '250px',
+})<RootProps>(({ theme }) => ({
+  minHeight: '250px',
   width: '100%',
   borderRadius: '1rem',
-  backgroundColor,
   overflow: 'hidden',
-  backgroundImage: `url(${backgroundImage})`,
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
+  marginBottom: '1.25rem',
 }));
 
 export { Root };

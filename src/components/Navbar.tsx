@@ -5,6 +5,7 @@ import {
   SetStateAction,
   MouseEventHandler,
   Fragment,
+  ChangeEventHandler,
 } from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 import { WbSunnyTwoTone, Search } from '@mui/icons-material';
@@ -17,7 +18,7 @@ import {
   Unit,
 } from '../styles/Navbar.styles';
 import fetchData from '../helpers/fetchData';
-import { ChangeEventHandler } from 'react';
+import { getFullCountryName } from '../helpers/IntlHelpers';
 import { type CitiesData, type CityData } from '../types/CitiesDataType';
 import { type UnitType } from '../types/GlobalTypes';
 import KEY from '../../API_KEY';
@@ -132,7 +133,8 @@ const Navbar = ({
                     onClick={handleCitySelection(city)}
                   >
                     <ListItemText>
-                      {city.name} {city.country} {city.state ?? city.state}
+                      {city.name}, {getFullCountryName(city.country)}{' '}
+                      {city.state && city.state}
                     </ListItemText>
                   </ListItem>
                   {idx < fetchedCityList.length - 1 && <Divider />}

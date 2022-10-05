@@ -1,7 +1,9 @@
 import MainCard from './MainCard';
 import MainContainer from './MainContainer';
-import { Box, alpha, Typography } from '@mui/material';
+import { Box, alpha, Typography, styled } from '@mui/material';
 import {} from '../styles/Index.styles';
+import { getFullCountryName } from '../helpers/IntlHelpers';
+import TodaysForecastCard from './TodaysForecastCard';
 import { type WeatherData } from '../types/WeatherDataType';
 import { type CityData } from '../types/CitiesDataType';
 interface Props {
@@ -29,7 +31,14 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
 
   return (
     <MainContainer>
-      <MainCard backgroundImage={BACKGROUND_IMG_URL}>
+      <MainCard
+        sx={(theme) => ({
+          backgroundImage: `url(${BACKGROUND_IMG_URL})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+        })}
+      >
         <Box
           sx={(theme) => ({
             height: '3rem',
@@ -40,7 +49,8 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
             paddingInline: '1rem',
           })}
         >
-          {selectedCity.name && (
+          {/*TODO: Add a loader and a better conditional */}
+          {selectedCity.name && data.current && (
             <>
               <Typography
                 variant='body1'
@@ -49,7 +59,7 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
                   marginRight: '1ch',
                 })}
               >
-                {selectedCity?.name}, {selectedCity?.country}
+                {selectedCity?.name}, {getFullCountryName(selectedCity?.country)}
               </Typography>
               <Typography variant='body1'>
                 As of {hours}:{minutes.length === 1 ? `0${minutes}` : minutes} ({timezone}
@@ -73,6 +83,36 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
           </Typography>
         </Box>
       </MainCard>
+      {/*TODO: Add a loader and a better conditional, maybe make it global */}
+      {selectedCity.name && data.current && (
+        <MainCard
+          sx={{
+            backgroundColor: 'white',
+            color: 'black',
+            paddingBlock: '1rem',
+            paddingInline: '0.25rem',
+            height: '16rem',
+          }}
+        >
+          <Typography variant='h6' component='p'>
+            Today's Forecast for {selectedCity.name},{' '}
+            {getFullCountryName(selectedCity?.country)}
+          </Typography>
+          <Box
+            sx={(theme) => ({
+              backgroundColor: theme.palette.grey[300],
+              height: '80%',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4,1fr)',
+            })}
+          >
+            <p>a</p>
+            <p>a</p>
+            <p>a</p>
+            <p>a</p>
+          </Box>
+        </MainCard>
+      )}
     </MainContainer>
   );
 };

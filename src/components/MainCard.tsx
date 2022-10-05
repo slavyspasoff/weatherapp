@@ -1,18 +1,15 @@
+import { SxProps, Theme } from '@mui/material';
 import { ReactNode } from 'react';
 import { Root } from '../styles/MainCard.styles';
 
 interface Props {
   children?: ReactNode;
-  backgroundColor?: string;
-  backgroundImage?: string;
+
+  sx?: SxProps<Theme>;
 }
 
-const MainCard = ({ children, backgroundColor, backgroundImage }: Props) => {
-  return (
-    <Root backgroundColor={backgroundColor} backgroundImage={backgroundImage}>
-      {children}
-    </Root>
-  );
+const MainCard = ({ children, sx }: Props) => {
+  return <Root sx={sx}>{children}</Root>;
 };
 
 export default MainCard;
