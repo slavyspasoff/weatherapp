@@ -6,13 +6,17 @@ import { type CityData } from '../types/CitiesDataType';
 interface Props {
   data: WeatherData;
   selectedCity: CityData;
+  tempUnit: string;
 }
 
-const Main = ({ data, selectedCity }: Props) => {
+const Main = ({ data, selectedCity, tempUnit }: Props) => {
   return (
     <Root>
       <Routes>
-        <Route path='/' element={<Index data={data} selectedCity={selectedCity} />} />
+        <Route
+          path='/'
+          element={<Index data={data} selectedCity={selectedCity} tempUnit={tempUnit} />}
+        />
       </Routes>
     </Root>
   );

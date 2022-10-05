@@ -1,4 +1,4 @@
-export type UnitType = 'f' | 'c';
+export type UnitType = 'metric' | 'imperial';
 
 export interface LocationCoord {
   lat: number;

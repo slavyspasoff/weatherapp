@@ -71,7 +71,7 @@ const Navbar = ({
   }, [searchInputValue]);
 
   const toggleTempUnit = () => {
-    setTempUnit((prev) => (prev === 'f' ? 'c' : 'f'));
+    setTempUnit((prev) => (prev === 'metric' ? 'imperial' : 'metric'));
   };
 
   const handleSearchInputValueChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
@@ -143,10 +143,10 @@ const Navbar = ({
         </Box>
 
         <UnitContainer>
-          <Unit selected={tempUnit === 'f'} onClick={toggleTempUnit}>
+          <Unit selected={tempUnit === 'metric'} onClick={toggleTempUnit}>
             &#8451;
           </Unit>
-          <Unit selected={tempUnit === 'c'} onClick={toggleTempUnit}>
+          <Unit selected={tempUnit === 'imperial'} onClick={toggleTempUnit}>
             &#8457;
           </Unit>
         </UnitContainer>

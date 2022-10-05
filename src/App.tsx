@@ -13,7 +13,7 @@ const BASEURL = 'https://api.openweathermap.org';
 
 function App() {
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
-  const [tempUnit, setTempUnit] = useState<UnitType>('c');
+  const [tempUnit, setTempUnit] = useState<UnitType>('metric');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
   const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
   const [selectedCity, setSelectedCity] = useState<CityData>({} as CityData);
@@ -44,7 +44,7 @@ function App() {
       (async () => {
         try {
           const fetchedWeatherData = await fetchData(
-            `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&appid=${KEY}`
+            `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&units=${tempUnit}&appid=${KEY}`
           );
           setData(fetchedWeatherData as WeatherData);
           const fetchedCityData = await fetchData(
@@ -54,7 +54,7 @@ function App() {
           //TODO: ADD CUSTOM ERROR
         } catch (err) {}
       })();
-  }, [locationCoord]);
+  }, [locationCoord, tempUnit]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,7 +67,7 @@ function App() {
         setTempUnit={setTempUnit}
         setSelectedCity={setSelectedCity}
       />
-      <Main data={data} selectedCity={selectedCity} />
+      <Main data={data} selectedCity={selectedCity} tempUnit={tempUnit} />
     </ThemeProvider>
   );
 }
