@@ -1,4 +1,11 @@
-import { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import {
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+  MouseEventHandler,
+  Fragment,
+} from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 import { WbSunnyTwoTone, Search } from '@mui/icons-material';
 import {
@@ -12,7 +19,7 @@ import {
 import fetchData from '../helpers/fetchData';
 import { ChangeEventHandler } from 'react';
 import { type CitiesData } from '../types/CitiesDataType';
-import { type UnitType } from '../types/GlobalTypes';
+import { type CityType, type UnitType } from '../types/GlobalTypes';
 import KEY from '../../API_KEY';
 
 interface Props {
@@ -22,6 +29,7 @@ interface Props {
   setFetchedCityList: Dispatch<SetStateAction<CitiesData>>;
   setLocationCoord: Dispatch<SetStateAction<{ lat: number; lon: number }>>;
   setTempUnit: Dispatch<SetStateAction<UnitType>>;
+  setSelectedCity: Dispatch<SetStateAction<CityType>>;
 }
 
 const BASEURL = 'https://api.openweathermap.org';
@@ -33,6 +41,7 @@ const Navbar = ({
   setLocationCoord,
   tempUnit,
   setTempUnit,
+  setSelectedCity,
 }: Props) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
 
@@ -68,6 +77,14 @@ const Navbar = ({
   const handleSearchInputValueChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
     setSearchInputValue(evt.target.value);
   };
+  //TODO: Add Type for city
+  const handleCitySelection =
+    ({ country, lat, local_names, lon, name, state }: CityType): MouseEventHandler =>
+    (evt) => {
+      setSearchInputValue('');
+      setSelectedCity({ country, name, local_names, lat, lon, state });
+      setLocationCoord({ lat, lon });
+    };
 
   return (
     <AppBar>
@@ -103,26 +120,23 @@ const Navbar = ({
               })}
             >
               {fetchedCityList.map((city, idx) => (
-                <>
+                <Fragment key={`${city.lat}${city.lon}`}>
                   <ListItem
+                    //TODO: Move the theming to styled component
                     sx={(theme) => ({
                       cursor: 'pointer',
                       '&:hover': {
                         backgroundColor: theme.palette.grey[900],
                       },
                     })}
-                    // TODO: Add handle function
-                    onClick={() => {
-                      setSearchInputValue('');
-                      setLocationCoord({ lat: city.lat, lon: city.lon });
-                    }}
+                    onClick={handleCitySelection(city)}
                   >
                     <ListItemText>
                       {city.name} {city.country} {city.state ?? city.state}
                     </ListItemText>
                   </ListItem>
                   {idx < fetchedCityList.length - 1 && <Divider />}
-                </>
+                </Fragment>
               ))}
             </List>
           )}
