@@ -29,6 +29,19 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
   const tempDay = data.current ? formatTempUnit(data.daily[0].temp.day) : '';
   const tempNight = data.current ? formatTempUnit(data.daily[0].temp.min) : '';
 
+  //TODO: Introduce better condition
+  const partsOfTheDay = ['afternoon', 'evening', 'morning', 'overnight'];
+  const forecastCards = data.daily
+    ? Object.entries(data.daily[0].feels_like).map((v, idx) => (
+        <TodaysForecastCard
+          temp={String(Math.round(v[1]))}
+          text={partsOfTheDay[idx]}
+          key={partsOfTheDay[idx]}
+          currentActive={Math.floor(timeNow.getHours() / 6) === idx}
+        />
+      ))
+    : [];
+
   return (
     <MainContainer>
       <MainCard
@@ -94,22 +107,27 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
             height: '16rem',
           }}
         >
-          <Typography variant='h6' component='p'>
+          <Typography
+            paragraph
+            sx={(theme) => ({ paddingInline: '2rem', fontSize: '1.15rem' })}
+          >
             Today's Forecast for {selectedCity.name},{' '}
             {getFullCountryName(selectedCity?.country)}
           </Typography>
           <Box
             sx={(theme) => ({
-              backgroundColor: theme.palette.grey[300],
               height: '80%',
               display: 'grid',
+              textAlign: 'center',
+              // border: '1px solid grey',
+              paddingTop: '1rem',
               gridTemplateColumns: 'repeat(4,1fr)',
             })}
           >
-            <p>a</p>
-            <p>a</p>
-            <p>a</p>
-            <p>a</p>
+            {forecastCards[2]}
+            {forecastCards[0]}
+            {forecastCards[1]}
+            {forecastCards[3]}
           </Box>
         </MainCard>
       )}
