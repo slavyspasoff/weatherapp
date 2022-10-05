@@ -1,13 +1,5 @@
-import { useEffect, useState } from 'react';
-import {
-  Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  alpha,
-} from '@mui/material';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import { Box, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 import { WbSunnyTwoTone, Search } from '@mui/icons-material';
 import {
   AppBar,
@@ -20,15 +12,16 @@ import {
 import fetchData from '../helpers/fetchData';
 import { ChangeEventHandler } from 'react';
 import { type CitiesData } from '../types/CitiesDataType';
+import { type UnitType } from '../types/GlobalTypes';
 import KEY from '../../API_KEY';
 
 interface Props {
   toggleTheme: () => void;
+  tempUnit: UnitType;
   fetchedCityList: CitiesData;
-  setFetchedCityList: (v: CitiesData) => void;
-  //TODO: Make a global LocationCoordType
-  locationCoord: { lat: number; lon: number };
-  setLocationCoord: (v: { lat: number; lon: number }) => void;
+  setFetchedCityList: Dispatch<SetStateAction<CitiesData>>;
+  setLocationCoord: Dispatch<SetStateAction<{ lat: number; lon: number }>>;
+  setTempUnit: Dispatch<SetStateAction<UnitType>>;
 }
 
 const BASEURL = 'https://api.openweathermap.org';
@@ -37,11 +30,11 @@ const Navbar = ({
   toggleTheme,
   fetchedCityList,
   setFetchedCityList,
-  locationCoord,
   setLocationCoord,
+  tempUnit,
+  setTempUnit,
 }: Props) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
-  const [tempUnit, setTempUnit] = useState<'f' | 'c'>('c');
 
   let timeout: number | null = null;
 

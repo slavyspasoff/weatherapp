@@ -1,8 +1,9 @@
 import Index from './Index';
 import { Root } from '../styles/Main.styles';
 import { Route, Routes } from 'react-router-dom';
+import { type WeatherData } from '../types/WeatherDataType';
 interface Props {
-  data: any;
+  data: WeatherData;
 }
 
 const Main = ({ data }: Props) => {

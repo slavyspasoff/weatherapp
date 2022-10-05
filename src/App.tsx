@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { type WeatherData } from './types/WeatherDataType';
 import { type CitiesData } from './types/CitiesDataType';
+import { type UnitType } from './types/GlobalTypes';
 import fetchData from './helpers/fetchData';
 import getBrowserCoordinates from './helpers/getBrowserCoordinates';
 import Navbar from './components/Navbar';
@@ -16,6 +17,7 @@ interface LocationCoord {
 
 function App() {
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
+  const [tempUnit, setTempUnit] = useState<UnitType>('c');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
   const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
   const [fetchedCityList, setFetchedCityList] = useState<CitiesData>([] as CitiesData);
@@ -57,8 +59,9 @@ function App() {
         toggleTheme={toggleTheme}
         fetchedCityList={fetchedCityList}
         setFetchedCityList={setFetchedCityList}
-        locationCoord={locationCoord}
         setLocationCoord={setLocationCoord}
+        tempUnit={tempUnit}
+        setTempUnit={setTempUnit}
       />
       <Main data={data} />
     </ThemeProvider>
