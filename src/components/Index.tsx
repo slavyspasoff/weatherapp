@@ -3,10 +3,10 @@ import MainContainer from './MainContainer';
 import { Box, alpha, Typography } from '@mui/material';
 import {} from '../styles/Index.styles';
 import { type WeatherData } from '../types/WeatherDataType';
-import { type CityType } from '../types/GlobalTypes';
+import { type CityData } from '../types/CitiesDataType';
 interface Props {
   data: WeatherData;
-  selectedCity: CityType;
+  selectedCity: CityData;
 }
 
 const BACKGROUND_IMG_URL = 'https://images.unsplash.com/photo-1483702721041-b23de737a886';

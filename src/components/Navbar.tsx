@@ -18,8 +18,8 @@ import {
 } from '../styles/Navbar.styles';
 import fetchData from '../helpers/fetchData';
 import { ChangeEventHandler } from 'react';
-import { type CitiesData } from '../types/CitiesDataType';
-import { type CityType, type UnitType } from '../types/GlobalTypes';
+import { type CitiesData, type CityData } from '../types/CitiesDataType';
+import { type UnitType } from '../types/GlobalTypes';
 import KEY from '../../API_KEY';
 
 interface Props {
@@ -29,7 +29,7 @@ interface Props {
   setFetchedCityList: Dispatch<SetStateAction<CitiesData>>;
   setLocationCoord: Dispatch<SetStateAction<{ lat: number; lon: number }>>;
   setTempUnit: Dispatch<SetStateAction<UnitType>>;
-  setSelectedCity: Dispatch<SetStateAction<CityType>>;
+  setSelectedCity: Dispatch<SetStateAction<CityData>>;
 }
 
 const BASEURL = 'https://api.openweathermap.org';
@@ -79,7 +79,7 @@ const Navbar = ({
   };
   //TODO: Add Type for city
   const handleCitySelection =
-    ({ country, lat, local_names, lon, name, state }: CityType): MouseEventHandler =>
+    ({ country, lat, local_names, lon, name, state }: CityData): MouseEventHandler =>
     (evt) => {
       setSearchInputValue('');
       setSelectedCity({ country, name, local_names, lat, lon, state });

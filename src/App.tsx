@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { type WeatherData } from './types/WeatherDataType';
-import { type CitiesData } from './types/CitiesDataType';
-import { type UnitType, type CityType, type LocationCoord } from './types/GlobalTypes';
+import { type CitiesData, type CityData } from './types/CitiesDataType';
+import { type UnitType, type LocationCoord } from './types/GlobalTypes';
 import fetchData from './helpers/fetchData';
 import getBrowserCoordinates from './helpers/getBrowserCoordinates';
 import Navbar from './components/Navbar';
@@ -16,7 +16,7 @@ function App() {
   const [tempUnit, setTempUnit] = useState<UnitType>('c');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
   const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
-  const [selectedCity, setSelectedCity] = useState<CityType>({} as CityType);
+  const [selectedCity, setSelectedCity] = useState<CityData>({} as CityData);
   const [fetchedCityList, setFetchedCityList] = useState<CitiesData>([] as CitiesData);
 
   const toggleTheme = () => {
@@ -32,8 +32,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const { coords }: { coords: GeolocationCoordinates } =
-          (await getBrowserCoordinates()) as GeolocationPosition;
+        const { coords } = (await getBrowserCoordinates()) as GeolocationPosition;
         setLocationCoord({ lat: coords.latitude, lon: coords.longitude });
         //TODO: Add error handler
       } catch (err) {}
@@ -44,12 +43,14 @@ function App() {
     if (locationCoord.lat && locationCoord.lon)
       (async () => {
         try {
-          //TODO: Come up with a better name than d for data :)
-          const d = await fetchData(
+          const fetchedWeatherData = await fetchData(
             `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&appid=${KEY}`
           );
-          console.log(d);
-          setData(d as WeatherData);
+          setData(fetchedWeatherData as WeatherData);
+          const fetchedCityData = await fetchData(
+            `http://api.openweathermap.org/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
+          );
+          setSelectedCity(fetchedCityData[0] as CityData);
           //TODO: ADD CUSTOM ERROR
         } catch (err) {}
       })();

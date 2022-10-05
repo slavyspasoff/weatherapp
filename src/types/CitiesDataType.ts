@@ -1,4 +1,4 @@
-interface CityData {
+export interface CityData {
   name: string;
   local_names: { [key: string]: string };
   lat: number;
