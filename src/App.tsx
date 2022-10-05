@@ -46,8 +46,9 @@ function App() {
         try {
           //TODO: Come up with a better name than d for data :)
           const d = await fetchData(
-            `${BASEURL}/data/2.5/forecast?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&appid=${KEY}`
+            `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&appid=${KEY}`
           );
+          console.log(d);
           setData(d as WeatherData);
           //TODO: ADD CUSTOM ERROR
         } catch (err) {}
@@ -65,7 +66,7 @@ function App() {
         setTempUnit={setTempUnit}
         setSelectedCity={setSelectedCity}
       />
-      <Main data={data} />
+      <Main data={data} selectedCity={selectedCity} />
     </ThemeProvider>
   );
 }
