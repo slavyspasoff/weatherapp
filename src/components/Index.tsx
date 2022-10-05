@@ -20,11 +20,12 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
   //TODO: Move Intl to helper function
   const locale = navigator.language || 'en-EN';
   const unit = tempUnit === 'metric' ? 'celsius' : 'fahrenheit';
-  const displayedTemp = data.current
-    ? new Intl.NumberFormat(locale, { style: 'unit', unit }).format(
-        Math.round(data.current.temp)
-      )
-    : '';
+  const formatTempUnit = (temp: number) =>
+    new Intl.NumberFormat(locale, { style: 'unit', unit }).format(Math.round(temp));
+
+  const tempCurrent = data.current ? formatTempUnit(data.current.temp) : '';
+  const tempDay = data.current ? formatTempUnit(data.daily[0].temp.day) : '';
+  const tempNight = data.current ? formatTempUnit(data.daily[0].temp.min) : '';
 
   return (
     <MainContainer>
@@ -57,7 +58,20 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
             </>
           )}
         </Box>
-        <Box>{displayedTemp}</Box>
+        <Box sx={(theme) => ({ paddingInline: theme.spacing(3) })}>
+          <Typography variant='h2' component='p'>
+            {tempCurrent}
+          </Typography>
+          <Typography variant='h4' component='p'>
+            {data.current && data.current.weather[0].description}
+          </Typography>
+          <Typography variant='subtitle1' component='p'>
+            Day: {data.current && tempDay}
+          </Typography>
+          <Typography variant='subtitle1' component='p'>
+            Night: {data.current && tempNight}
+          </Typography>
+        </Box>
       </MainCard>
     </MainContainer>
   );

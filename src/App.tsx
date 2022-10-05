@@ -47,6 +47,7 @@ function App() {
             `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&units=${tempUnit}&appid=${KEY}`
           );
           setData(fetchedWeatherData as WeatherData);
+          console.log(fetchedWeatherData);
           const fetchedCityData = await fetchData(
             `http://api.openweathermap.org/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
           );
