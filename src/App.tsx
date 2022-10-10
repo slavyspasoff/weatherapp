@@ -5,7 +5,6 @@ import { type WeatherData } from './types/WeatherDataType';
 import { type CitiesData, type CityData } from './types/CitiesDataType';
 import { type UnitType, type LocationCoord } from './types/GlobalTypes';
 import Index from './components/Index';
-import { Root } from './styles/App.styles';
 import fetchData from './helpers/fetchData';
 import getBrowserCoordinates from './helpers/getBrowserCoordinates';
 import Navbar from './components/Navbar';
@@ -70,16 +69,13 @@ function App() {
         setTempUnit={setTempUnit}
         setSelectedCity={setSelectedCity}
       />
-      <Root>
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <Index data={data} selectedCity={selectedCity} tempUnit={tempUnit} />
-            }
-          />
-        </Routes>
-      </Root>
+
+      <Routes>
+        <Route
+          path='/'
+          element={<Index data={data} selectedCity={selectedCity} tempUnit={tempUnit} />}
+        />
+      </Routes>
     </ThemeProvider>
   );
 }

@@ -1,11 +1,13 @@
 import MainCard from './MainCard';
-import MainContainer from './MainContainer';
-import { Box, alpha, Typography, styled } from '@mui/material';
+import { Box, Typography, Grid } from '@mui/material';
+import { alpha } from '@mui/material/styles';
+import GridContainer from './GridContainer';
 import {} from '../styles/Index.styles';
 import { getFullCountryName } from '../helpers/IntlHelpers';
 import TodaysForecastCard from './TodaysForecastCard';
 import { type WeatherData } from '../types/WeatherDataType';
 import { type CityData } from '../types/CitiesDataType';
+
 interface Props {
   data: WeatherData;
   selectedCity: CityData;
@@ -48,91 +50,94 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
   }
 
   return (
-    <MainContainer>
-      <MainCard
-        sx={(theme) => ({
-          backgroundImage: `url(${BACKGROUND_IMG_URL})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-        })}
-      >
-        <Box
+    <GridContainer>
+      <Grid item xs={12} md={8}>
+        <MainCard
           sx={(theme) => ({
-            height: '3rem',
-            width: '100%',
-            backgroundColor: alpha(theme.palette.common.black, 0.5),
-            display: 'flex',
-            alignItems: 'center',
-            paddingInline: '1rem',
+            backgroundImage: `url(${BACKGROUND_IMG_URL})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
           })}
         >
-          {/*TODO: Add a loader and a better conditional */}
-          {selectedCity.name && data.current && (
-            <>
-              <Typography
-                variant='body1'
-                sx={(theme) => ({
-                  fontWeight: theme.typography.fontWeightBold,
-                  marginRight: '1ch',
-                })}
-              >
-                {selectedCity?.name}, {getFullCountryName(selectedCity?.country)}
-              </Typography>
-              <Typography variant='body1'>
-                As of {String(hours)}:
-                {String(minutes).length === 1 ? `0${minutes}` : minutes} ({timezone})
-              </Typography>
-            </>
-          )}
-        </Box>
-        <Box sx={(theme) => ({ paddingInline: theme.spacing(3) })}>
-          <Typography variant='h2' component='p'>
-            {tempCurrent}
-          </Typography>
-          <Typography variant='h4' component='p'>
-            {data.current && data.current.weather[0].description}
-          </Typography>
-          <Typography variant='subtitle1' component='p'>
-            Day: {data.current && tempDay}
-          </Typography>
-          <Typography variant='subtitle1' component='p'>
-            Night: {data.current && tempNight}
-          </Typography>
-        </Box>
-      </MainCard>
-      {/*TODO: Add a loader and a better conditional, maybe make it global */}
-      {selectedCity.name && data.current && (
-        <MainCard
-          sx={{
-            backgroundColor: 'white',
-            color: 'black',
-            paddingBlock: '1rem',
-            paddingInline: '0.25rem',
-            height: '16rem',
-          }}
-        >
-          <Typography
-            paragraph
-            sx={(theme) => ({ paddingInline: '2rem', fontSize: '1.15rem' })}
-          >
-            Today's Forecast for {selectedCity.name},{' '}
-            {getFullCountryName(selectedCity?.country)}
-          </Typography>
           <Box
             sx={(theme) => ({
-              height: '80%',
-              display: 'grid',
-              textAlign: 'center',
-              paddingTop: '1rem',
-              gridTemplateColumns: 'repeat(4,1fr)',
+              height: '3rem',
+              width: '100%',
+              backgroundColor: alpha(theme.palette.common.black, 0.5),
+              display: 'flex',
+              alignItems: 'center',
+              paddingInline: '1rem',
             })}
           >
-            {forecastCards}
+            {/*TODO: Add a loader and a better conditional */}
+            {selectedCity.name && data.current && (
+              <>
+                <Typography
+                  variant='body1'
+                  sx={(theme) => ({
+                    fontWeight: theme.typography.fontWeightBold,
+                    marginRight: '1ch',
+                  })}
+                >
+                  {selectedCity?.name}, {getFullCountryName(selectedCity?.country)}
+                </Typography>
+                <Typography variant='body1'>
+                  As of {String(hours)}:
+                  {String(minutes).length === 1 ? `0${minutes}` : minutes} ({timezone})
+                </Typography>
+              </>
+            )}
+          </Box>
+          <Box sx={(theme) => ({ paddingInline: theme.spacing(3) })}>
+            <Typography variant='h2' component='p'>
+              {tempCurrent}
+            </Typography>
+            <Typography variant='h4' component='p'>
+              {data.current && data.current.weather[0].description}
+            </Typography>
+            <Typography variant='subtitle1' component='p'>
+              Day: {data.current && tempDay}
+            </Typography>
+            <Typography variant='subtitle1' component='p'>
+              Night: {data.current && tempNight}
+            </Typography>
           </Box>
         </MainCard>
-      )}
-    </MainContainer>
+        {/*TODO: Add a loader and a better conditional, maybe make it global */}
+        {selectedCity.name && data.current && (
+          <MainCard
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              paddingBlock: '1rem',
+              paddingInline: '0.25rem',
+              height: '16rem',
+            }}
+          >
+            <Typography
+              paragraph
+              sx={(theme) => ({ paddingInline: '2rem', fontSize: '1.15rem' })}
+            >
+              Today's Forecast for {selectedCity.name},{' '}
+              {getFullCountryName(selectedCity?.country)}
+            </Typography>
+            <Box
+              sx={(theme) => ({
+                height: '80%',
+                display: 'grid',
+                textAlign: 'center',
+                paddingTop: '1rem',
+                gridTemplateColumns: 'repeat(4,1fr)',
+              })}
+            >
+              {forecastCards}
+            </Box>
+          </MainCard>
+        )}
+      </Grid>
+      <Grid item xs={12} md={4}></Grid>
+    </GridContainer>
   );
 };
 export default Index;
