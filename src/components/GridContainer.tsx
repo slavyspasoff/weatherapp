@@ -6,10 +6,6 @@ interface Props {
   sx?: SxProps<Theme>;
 }
 const MainContainer = ({ children, sx }: Props) => {
-  return (
-    <Root container spacing={3}>
-      {children}
-    </Root>
-  );
+  return <Root container>{children}</Root>;
 };
 export default MainContainer;

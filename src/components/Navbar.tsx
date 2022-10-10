@@ -25,11 +25,11 @@ import KEY from '../../API_KEY';
 
 interface Props {
   toggleTheme: () => void;
-  tempUnit: UnitType;
+  unit: UnitType;
   fetchedCityList: CitiesData;
   setFetchedCityList: Dispatch<SetStateAction<CitiesData>>;
   setLocationCoord: Dispatch<SetStateAction<{ lat: number; lon: number }>>;
-  setTempUnit: Dispatch<SetStateAction<UnitType>>;
+  setUnit: Dispatch<SetStateAction<UnitType>>;
   setSelectedCity: Dispatch<SetStateAction<CityData>>;
 }
 
@@ -40,8 +40,8 @@ const Navbar = ({
   fetchedCityList,
   setFetchedCityList,
   setLocationCoord,
-  tempUnit,
-  setTempUnit,
+  unit,
+  setUnit,
   setSelectedCity,
 }: Props) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
@@ -72,7 +72,7 @@ const Navbar = ({
   }, [searchInputValue]);
 
   const toggleTempUnit = () => {
-    setTempUnit((prev) => (prev === 'metric' ? 'imperial' : 'metric'));
+    setUnit((prev) => (prev === 'metric' ? 'imperial' : 'metric'));
   };
 
   const handleSearchInputValueChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
@@ -145,10 +145,10 @@ const Navbar = ({
         </Box>
 
         <UnitContainer>
-          <Unit selected={tempUnit === 'metric'} onClick={toggleTempUnit}>
+          <Unit selected={unit === 'metric'} onClick={toggleTempUnit}>
             &#8451;
           </Unit>
-          <Unit selected={tempUnit === 'imperial'} onClick={toggleTempUnit}>
+          <Unit selected={unit === 'imperial'} onClick={toggleTempUnit}>
             &#8457;
           </Unit>
         </UnitContainer>

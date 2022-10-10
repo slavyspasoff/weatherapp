@@ -19,7 +19,7 @@ const BASEURL = 'https://api.openweathermap.org';
 
 function App() {
   const [themeMode, setThemeMode] = useState<ThemeModeProps>('light');
-  const [tempUnit, setTempUnit] = useState<UnitType>('metric');
+  const [unit, setUnit] = useState<UnitType>('metric');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
   const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
   const [selectedCity, setSelectedCity] = useState<CityData>({} as CityData);
@@ -39,12 +39,15 @@ function App() {
     })();
   }, []);
 
+  {
+    /*Add lang prop to the url query to get the */
+  }
   useEffect(() => {
     if (locationCoord.lat && locationCoord.lon)
       (async () => {
         try {
           const fetchedWeatherData = await fetchData(
-            `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&units=${tempUnit}&appid=${KEY}`
+            `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&units=${unit}&appid=${KEY}`
           );
           setData(fetchedWeatherData as WeatherData);
           console.log(fetchedWeatherData);
@@ -55,7 +58,7 @@ function App() {
           //TODO: ADD CUSTOM ERROR
         } catch (err) {}
       })();
-  }, [locationCoord, tempUnit]);
+  }, [locationCoord, unit]);
 
   return (
     <ThemeProvider theme={theme(themeMode)}>
@@ -64,15 +67,15 @@ function App() {
         fetchedCityList={fetchedCityList}
         setFetchedCityList={setFetchedCityList}
         setLocationCoord={setLocationCoord}
-        tempUnit={tempUnit}
-        setTempUnit={setTempUnit}
+        unit={unit}
+        setUnit={setUnit}
         setSelectedCity={setSelectedCity}
       />
 
       <Routes>
         <Route
           path='/'
-          element={<Index data={data} selectedCity={selectedCity} tempUnit={tempUnit} />}
+          element={<Index data={data} selectedCity={selectedCity} unit={unit} />}
         />
       </Routes>
     </ThemeProvider>

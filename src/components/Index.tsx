@@ -7,11 +7,12 @@ import { getFullCountryName } from '../helpers/IntlHelpers';
 import TodaysForecastCard from './TodaysForecastCard';
 import { type WeatherData } from '../types/WeatherDataType';
 import { type CityData } from '../types/CitiesDataType';
+import theme from '../theme';
 
 interface Props {
   data: WeatherData;
   selectedCity: CityData;
-  tempUnit: string;
+  unit: string;
 }
 
 const BACKGROUND_IMG_URL = 'https://images.unsplash.com/photo-1483702721041-b23de737a886';
@@ -20,12 +21,43 @@ const minutes = timeNow.getMinutes();
 const hours = timeNow.getHours();
 const timezone = timeNow.toTimeString().replace(/[0-9()+:]/g, '');
 
-const Index = ({ data, selectedCity, tempUnit }: Props) => {
-  //TODO: Move Intl to helper function
+const Index = ({ data, selectedCity, unit }: Props) => {
+  //TODO: Move Intl to helper function and combine them to a single function
   const locale = navigator.language || 'en-EN';
-  const unit = tempUnit === 'metric' ? 'celsius' : 'fahrenheit';
+  const tempUnit = unit === 'metric' ? 'celsius' : 'fahrenheit';
   const formatTempUnit = (temp: number) =>
-    new Intl.NumberFormat(locale, { style: 'unit', unit }).format(Math.round(temp));
+    new Intl.NumberFormat(locale, { style: 'unit', unit: tempUnit }).format(
+      Math.round(temp)
+    );
+
+  const windSpeedUnit = unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
+  const formatWindSpeedUnit = (speed: number) =>
+    new Intl.NumberFormat(locale, { style: 'unit', unit: windSpeedUnit }).format(
+      Math.round(speed)
+    );
+
+  const windGustUnit = unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
+  const formatWindGustUnit = (speed: number) =>
+    new Intl.NumberFormat(locale, { style: 'unit', unit: windGustUnit }).format(
+      Math.round(speed)
+    );
+
+  const windDirection = (degree: number) => {
+    const directions = [
+      'North',
+      'North/East',
+      'East',
+      'South/East',
+      'South',
+      'South/West',
+      'West',
+      'North/West',
+    ];
+    const divider = 360 / directions.length;
+    if (degree < 360 - divider / 2)
+      return directions[Math.round((degree - divider / 2) / divider)];
+    return directions[0];
+  };
 
   const tempCurrent = data.current ? formatTempUnit(data.current.temp) : '';
   const tempDay = data.current ? formatTempUnit(data.daily[0].temp.day) : '';
@@ -51,7 +83,18 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
 
   return (
     <GridContainer>
-      <Grid item xs={12} lg={8}>
+      {/*TODO: Create GridItem component with property of left/right so I don't have to
+      duplicate the style for every Route.*/}
+      <Grid
+        item
+        xs={12}
+        lg={8}
+        sx={(theme) => ({
+          paddingTop: theme.spacing(3),
+          paddingLeft: theme.spacing(3),
+          paddingRight: theme.spacing(1.5),
+        })}
+      >
         <MainCard
           sx={(theme) => ({
             backgroundImage: `url(${BACKGROUND_IMG_URL})`,
@@ -136,7 +179,43 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
           </MainCard>
         )}
       </Grid>
-      <Grid item xs={12} lg={4}></Grid>
+      <Grid
+        item
+        xs={12}
+        lg={4}
+        sx={(theme) => ({
+          paddingTop: theme.spacing(3),
+          paddingLeft: theme.spacing(1.5),
+          paddingRight: theme.spacing(3),
+        })}
+      >
+        <MainCard
+          sx={(theme) => ({
+            bgcolor: theme.palette.background.paper,
+            color: theme.palette.primary.main,
+            padding: theme.spacing(3),
+          })}
+        >
+          <Typography paragraph sx={{ fontSize: '1.25rem' }}>
+            Wind metrics
+          </Typography>
+          <Typography paragraph>
+            Wind speed: {data.current && formatWindSpeedUnit(data.current.wind_speed)}
+          </Typography>
+          <Typography paragraph>
+            Wind gust: {/*TODO: Write better conditional!  */}
+            {data.current && data.current.wind_gust
+              ? `${formatWindGustUnit(data.current.wind_gust)}`
+              : 'none'}
+          </Typography>
+          <Typography paragraph>
+            Wind direction: {/*TODO: Write better conditional!  */}
+            {data.current &&
+              data.current.wind_deg &&
+              windDirection(data.current.wind_deg)}
+          </Typography>
+        </MainCard>
+      </Grid>
     </GridContainer>
   );
 };

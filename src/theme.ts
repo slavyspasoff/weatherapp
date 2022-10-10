@@ -10,6 +10,9 @@ const theme = (themeMode: ThemeModeProps) =>
   createTheme({
     palette: {
       mode: themeMode,
+      primary: {
+        main: 'rgb(0, 0,0)',
+      },
     },
     breakpoints: {
       values: {
