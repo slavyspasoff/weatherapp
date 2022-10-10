@@ -7,7 +7,7 @@ interface Props {
 }
 const MainContainer = ({ children, sx }: Props) => {
   return (
-    <Root sx={sx} container>
+    <Root container spacing={3}>
       {children}
     </Root>
   );

@@ -7,9 +7,9 @@ const Root = styled(Box, {
 })<RootProps>(({ theme }) => ({
   minHeight: '250px',
   width: '100%',
-  borderRadius: '1rem',
+  borderRadius: 16,
   overflow: 'hidden',
-  marginBottom: '1.25rem',
+  marginBottom: theme.spacing(3),
 }));
 
 export { Root };

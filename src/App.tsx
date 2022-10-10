@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import { type WeatherData } from './types/WeatherDataType';
 import { type CitiesData, type CityData } from './types/CitiesDataType';
-import { type UnitType, type LocationCoord } from './types/GlobalTypes';
+import {
+  type UnitType,
+  type LocationCoord,
+  type ThemeModeProps,
+} from './types/GlobalTypes';
 import Index from './components/Index';
+import theme from './theme';
 import fetchData from './helpers/fetchData';
 import getBrowserCoordinates from './helpers/getBrowserCoordinates';
 import Navbar from './components/Navbar';
@@ -13,7 +18,7 @@ import KEY from '../API_KEY';
 const BASEURL = 'https://api.openweathermap.org';
 
 function App() {
-  const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light');
+  const [themeMode, setThemeMode] = useState<ThemeModeProps>('light');
   const [tempUnit, setTempUnit] = useState<UnitType>('metric');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
   const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
@@ -23,21 +28,6 @@ function App() {
   const toggleTheme = () => {
     setThemeMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
-
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-    },
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 900,
-        lg: 1150,
-        xl: 1536,
-      },
-    },
-  });
 
   useEffect(() => {
     (async () => {
@@ -68,7 +58,7 @@ function App() {
   }, [locationCoord, tempUnit]);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme(themeMode)}>
       <Navbar
         toggleTheme={toggleTheme}
         fetchedCityList={fetchedCityList}
