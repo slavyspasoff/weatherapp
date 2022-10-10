@@ -14,8 +14,8 @@ interface Props {
 
 const BACKGROUND_IMG_URL = 'https://images.unsplash.com/photo-1483702721041-b23de737a886';
 const timeNow = new Date();
-const minutes = String(timeNow.getMinutes());
-const hours = String(timeNow.getHours());
+const minutes = timeNow.getMinutes();
+const hours = timeNow.getHours();
 const timezone = timeNow.toTimeString().replace(/[0-9()+:]/g, '');
 
 const Index = ({ data, selectedCity, tempUnit }: Props) => {
@@ -29,18 +29,23 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
   const tempDay = data.current ? formatTempUnit(data.daily[0].temp.day) : '';
   const tempNight = data.current ? formatTempUnit(data.daily[0].temp.min) : '';
 
-  //TODO: Introduce better condition
-  const partsOfTheDay = ['afternoon', 'evening', 'morning', 'overnight'];
-  const forecastCards = data.daily
-    ? Object.entries(data.daily[0].feels_like).map((v, idx) => (
-        <TodaysForecastCard
-          temp={String(Math.round(v[1]))}
-          text={partsOfTheDay[idx]}
-          key={partsOfTheDay[idx]}
-          currentActive={Math.floor(timeNow.getHours() / 6) === idx}
-        />
-      ))
-    : [];
+  const getActive = () => (Math.floor(hours / 6) === 3 ? 0 : Math.floor(hours / 6) - 1);
+
+  let forecastCards: JSX.Element[] = [];
+  if (data.daily) {
+    const todayFeelsLike = data.daily[0].feels_like;
+    const timeOfTheDay = ['morn', 'day', 'eve', 'night'] as const;
+    const timeOfTheDayText = ['morning', 'afternoon', 'evening', 'overnight'];
+    forecastCards = timeOfTheDay.map((key, idx) => (
+      <TodaysForecastCard
+        temp={Math.round(todayFeelsLike[key])}
+        key={key}
+        alreadyPassed={Math.floor(hours / 6) > idx}
+        currentActive={getActive() === idx}
+        text={timeOfTheDayText[idx]}
+      />
+    ));
+  }
 
   return (
     <MainContainer>
@@ -75,8 +80,8 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
                 {selectedCity?.name}, {getFullCountryName(selectedCity?.country)}
               </Typography>
               <Typography variant='body1'>
-                As of {hours}:{minutes.length === 1 ? `0${minutes}` : minutes} ({timezone}
-                )
+                As of {String(hours)}:
+                {String(minutes).length === 1 ? `0${minutes}` : minutes} ({timezone})
               </Typography>
             </>
           )}
@@ -119,15 +124,11 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
               height: '80%',
               display: 'grid',
               textAlign: 'center',
-              // border: '1px solid grey',
               paddingTop: '1rem',
               gridTemplateColumns: 'repeat(4,1fr)',
             })}
           >
-            {forecastCards[2]}
-            {forecastCards[0]}
-            {forecastCards[1]}
-            {forecastCards[3]}
+            {forecastCards}
           </Box>
         </MainCard>
       )}

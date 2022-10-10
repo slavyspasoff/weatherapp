@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { Routes, Route } from 'react-router-dom';
 import { type WeatherData } from './types/WeatherDataType';
 import { type CitiesData, type CityData } from './types/CitiesDataType';
 import { type UnitType, type LocationCoord } from './types/GlobalTypes';
+import Index from './components/Index';
+import { Root } from './styles/App.styles';
 import fetchData from './helpers/fetchData';
 import getBrowserCoordinates from './helpers/getBrowserCoordinates';
 import Navbar from './components/Navbar';
-import Main from './components/Main';
 import KEY from '../API_KEY';
 
 const BASEURL = 'https://api.openweathermap.org';
 
 function App() {
-  const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
+  const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light');
   const [tempUnit, setTempUnit] = useState<UnitType>('metric');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
   const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
@@ -49,7 +51,7 @@ function App() {
           setData(fetchedWeatherData as WeatherData);
           console.log(fetchedWeatherData);
           const fetchedCityData = await fetchData(
-            `http://api.openweathermap.org/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
+            `${BASEURL}/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
           );
           setSelectedCity(fetchedCityData[0] as CityData);
           //TODO: ADD CUSTOM ERROR
@@ -68,7 +70,16 @@ function App() {
         setTempUnit={setTempUnit}
         setSelectedCity={setSelectedCity}
       />
-      <Main data={data} selectedCity={selectedCity} tempUnit={tempUnit} />
+      <Root>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <Index data={data} selectedCity={selectedCity} tempUnit={tempUnit} />
+            }
+          />
+        </Routes>
+      </Root>
     </ThemeProvider>
   );
 }
