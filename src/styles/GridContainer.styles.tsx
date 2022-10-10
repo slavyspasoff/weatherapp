@@ -2,6 +2,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 const Root = styled(Grid)(({ theme }) => ({
   width: '90%',
+  padding: '1.5rem',
   maxWidth: '1200px',
   minWidth: '400px',
   marginInline: 'auto',

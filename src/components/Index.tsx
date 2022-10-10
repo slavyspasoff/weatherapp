@@ -51,7 +51,7 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
 
   return (
     <GridContainer>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} lg={8}>
         <MainCard
           sx={(theme) => ({
             backgroundImage: `url(${BACKGROUND_IMG_URL})`,
@@ -136,7 +136,7 @@ const Index = ({ data, selectedCity, tempUnit }: Props) => {
           </MainCard>
         )}
       </Grid>
-      <Grid item xs={12} md={4}></Grid>
+      <Grid item xs={12} lg={4}></Grid>
     </GridContainer>
   );
 };
