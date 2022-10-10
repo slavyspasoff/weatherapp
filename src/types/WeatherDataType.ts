@@ -21,11 +21,13 @@ export interface Current {
   uvi: number;
   clouds: number;
   visibility: number;
-  wind_speed: number;
-  wind_deg: number;
-  wind_gust: number;
+  wind_speed?: number;
+  wind_deg?: number;
+  wind_gust?: number;
   weather: Weather[];
   pop?: number;
+  rain?: Rain;
+  snow?: Snow;
 }
 
 export interface Weather {
@@ -44,19 +46,12 @@ export enum Description {
   ScatteredClouds = 'scattered clouds',
 }
 
-export enum Icon {
-  The01D = '01d',
-  The01N = '01n',
-  The02D = '02d',
-  The03D = '03d',
-  The03N = '03n',
-  The04D = '04d',
-  The04N = '04n',
+export interface Icon {
+  [K: string]: string;
 }
 
-export enum Main {
-  Clear = 'Clear',
-  Clouds = 'Clouds',
+export interface Main {
+  [K: string]: string;
 }
 
 export interface Daily {
@@ -78,6 +73,7 @@ export interface Daily {
   clouds: number;
   pop: number;
   uvi: number;
+  rain?: Rain;
 }
 
 export interface FeelsLike {
@@ -99,4 +95,12 @@ export interface Temp {
 export interface Minutely {
   dt: number;
   precipitation: number;
+}
+
+export interface Rain {
+  [K: string]: number;
+}
+
+export interface Snow {
+  [K: string]: number;
 }

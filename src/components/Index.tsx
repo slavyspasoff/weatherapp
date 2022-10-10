@@ -136,6 +136,12 @@ const Index = ({ data, selectedCity, unit }: Props) => {
             <Typography variant='h2' component='p'>
               {tempCurrent}
             </Typography>
+            {/*TODO: Style the image*/}
+            {data.current && (
+              <img
+                src={`http://openweathermap.org/img/wn/${data.current.weather[0].icon}@4x.png`}
+              />
+            )}
             <Typography variant='h4' component='p'>
               {data.current && data.current.weather[0].description}
             </Typography>
@@ -200,7 +206,8 @@ const Index = ({ data, selectedCity, unit }: Props) => {
             Wind metrics
           </Typography>
           <Typography paragraph>
-            Wind speed: {data.current && formatWindSpeedUnit(data.current.wind_speed)}
+            Wind speed:{' '}
+            {data.current && formatWindSpeedUnit(data.current.wind_speed as number)}
           </Typography>
           <Typography paragraph>
             Wind gust: {/*TODO: Write better conditional!  */}
