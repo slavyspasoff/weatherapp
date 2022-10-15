@@ -5,9 +5,8 @@ import GridContainer from './GridContainer';
 import {} from '../styles/Index.styles';
 import { getFullCountryName } from '../helpers/IntlHelpers';
 import TodaysForecastCard from './TodaysForecastCard';
-import { type WeatherData } from '../types/WeatherDataType';
-import { type CityData } from '../types/CitiesDataType';
-import theme from '../theme';
+import { type WeatherData } from '../types/Weather.type';
+import { type CityData } from '../types/CityData.type';
 
 interface Props {
   data: WeatherData;

@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ThemeProvider } from '@mui/material';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
-import { type WeatherData } from './types/WeatherDataType';
-import { type CitiesData, type CityData } from './types/CitiesDataType';
-import {
-  type UnitType,
-  type LocationCoord,
-  type ThemeModeProps,
-} from './types/GlobalTypes';
+import { type WeatherData } from './types/Weather.type';
+import { type CitiesData, type CityData } from './types/CityData.type';
+import { type UnitType, type LocationCoord, type ThemeMode } from './types/Global.type';
 import Index from './components/Index';
 import theme from './theme';
 import fetchData from './helpers/fetchData';
@@ -18,7 +14,7 @@ import KEY from '../API_KEY';
 const BASEURL = 'https://api.openweathermap.org';
 
 function App() {
-  const [themeMode, setThemeMode] = useState<ThemeModeProps>('light');
+  const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
   const [unit, setUnit] = useState<UnitType>('metric');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
   const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
@@ -62,6 +58,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme(themeMode)}>
+      <CssBaseline />
       <Navbar
         toggleTheme={toggleTheme}
         fetchedCityList={fetchedCityList}

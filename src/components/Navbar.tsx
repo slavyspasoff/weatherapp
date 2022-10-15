@@ -1,11 +1,11 @@
 import {
   useEffect,
   useState,
-  Dispatch,
-  SetStateAction,
-  MouseEventHandler,
   Fragment,
-  ChangeEventHandler,
+  type Dispatch,
+  type SetStateAction,
+  type MouseEventHandler,
+  type ChangeEventHandler,
 } from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 import { WbSunnyTwoTone, Search } from '@mui/icons-material';
@@ -19,8 +19,8 @@ import {
 } from '../styles/Navbar.styles';
 import fetchData from '../helpers/fetchData';
 import { getFullCountryName } from '../helpers/IntlHelpers';
-import { type CitiesData, type CityData } from '../types/CitiesDataType';
-import { type UnitType } from '../types/GlobalTypes';
+import { type CitiesData, type CityData } from '../types/CityData.type';
+import { type UnitType } from '../types/Global.type';
 import KEY from '../../API_KEY';
 
 interface Props {

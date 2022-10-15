@@ -1,5 +1,5 @@
 import { type SxProps, type Theme } from '@mui/material';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { Root } from '../styles/MainCard.styles';
 
 interface Props {
