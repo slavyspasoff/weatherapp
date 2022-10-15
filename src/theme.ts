@@ -1,12 +1,12 @@
 import { createTheme } from '@mui/material';
-import { type ThemeMode } from './types/GlobalTypes';
+import { type ThemeMode } from './types/Global.type';
 
 const theme = (themeMode: ThemeMode) =>
   createTheme({
     palette: {
       mode: themeMode,
       primary: {
-        main: 'rgb(32,34,55)',
+        main: 'rgb(84,90,145)',
       },
     },
     breakpoints: {

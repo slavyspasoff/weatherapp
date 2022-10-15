@@ -2,7 +2,6 @@ import { styled, alpha } from '@mui/material/styles';
 import { AppBar as _AppBar, Container, InputBase as _InputBase } from '@mui/material';
 
 const AppBar = styled(_AppBar)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.grey[900], 0.1),
   height: '7.5vh',
 }));
 
@@ -14,8 +13,9 @@ const Root = styled(Container)(({ theme }) => ({
 }));
 
 const SearchContainer = styled('div')(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.background.paper, 0.15),
   borderRadius: '2em',
+  border: `1px solid ${theme.palette.grey[500]}`,
   display: 'flex',
   alignItems: 'center',
   paddingInline: theme.spacing(2),
