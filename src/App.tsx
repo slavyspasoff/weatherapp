@@ -7,8 +7,12 @@ import {
 } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import { type WeatherData } from './types/Weather.type';
-import { type CitiesData, type CityData } from './types/CityData.type';
-import { type UnitType, type LocationCoord } from './types/Global.type';
+import {
+  type UnitType,
+  type LocationCoord,
+  type CitiesData,
+  type CityData,
+} from './types/Global.type';
 import Index from './components/Index';
 import theme from './theme';
 import fetchData from './helpers/fetchData';
@@ -30,10 +34,10 @@ function App() {
     setPaletteMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark');
-  useEffect(() => {
-    if (prefersDarkMode) setPaletteMode('dark');
-  }, []);
+  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark');
+  // useEffect(() => {
+  //   if (prefersDarkMode) setPaletteMode('dark');
+  // }, []);
 
   useEffect(() => {
     (async () => {

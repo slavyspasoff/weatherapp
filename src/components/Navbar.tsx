@@ -19,8 +19,7 @@ import {
 } from '../styles/Navbar.styles';
 import fetchData from '../helpers/fetchData';
 import { getFullCountryName } from '../helpers/IntlHelpers';
-import { type CitiesData, type CityData } from '../types/CityData.type';
-import { type UnitType } from '../types/Global.type';
+import { type UnitType, type CitiesData, type CityData } from '../types/Global.type';
 import KEY from '../../API_KEY';
 
 interface Props {
