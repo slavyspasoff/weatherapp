@@ -88,7 +88,7 @@ const Navbar = ({
     };
 
   return (
-    <AppBar>
+    <AppBar enableColorOnDark>
       <Root>
         <Box
           sx={{ display: 'flex', gap: '2rem', alignItems: 'center' }}

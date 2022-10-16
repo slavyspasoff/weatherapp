@@ -1,8 +1,8 @@
-import { Box, styled, alpha } from '@mui/material';
+import { Card, styled } from '@mui/material';
 
 interface RootProps {}
 
-const Root = styled(Box, {
+const Root = styled(Card, {
   shouldForwardProp: (prop) => prop !== 'backgroundColor' && prop !== 'backgroundImage',
 })<RootProps>(({ theme }) => ({
   minHeight: '250px',

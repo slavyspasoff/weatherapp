@@ -13,13 +13,12 @@ const Root = styled(Container)(({ theme }) => ({
 }));
 
 const SearchContainer = styled('div')(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.background.paper, 0.15),
+  backgroundColor: alpha(theme.palette.background.paper, 0.075),
   borderRadius: '2em',
   border: `1px solid ${theme.palette.grey[500]}`,
   display: 'flex',
   alignItems: 'center',
-  paddingInline: theme.spacing(2),
-  paddingBlock: theme.spacing(0.75),
+  padding: theme.spacing(0.75, 2),
   width: '100%',
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -27,7 +26,7 @@ const SearchContainer = styled('div')(({ theme }) => ({
 }));
 
 const InputBase = styled(_InputBase)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.primary.contrastText,
   paddingInline: theme.spacing(1),
   flex: 1,
   textAlign: 'center',
@@ -56,7 +55,7 @@ const Unit = styled('span', {
   width: '50%',
   cursor: 'pointer',
   transition: 'background-color 0.5s linear, color 0.5s linear',
-  backgroundColor: selected ? theme.palette.info.dark : 'transparent',
+  backgroundColor: selected ? theme.palette.info.main : 'transparent',
 }));
 
 export { AppBar, Root, SearchContainer, InputBase, UnitContainer, Unit };

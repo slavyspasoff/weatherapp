@@ -1,12 +1,11 @@
-import { createTheme } from '@mui/material';
-import { type ThemeMode } from './types/Global.type';
-
-const theme = (themeMode: ThemeMode) =>
+import { createTheme, useTheme } from '@mui/material';
+import { type PaletteMode } from '@mui/material';
+const theme = (paletteMode: PaletteMode) =>
   createTheme({
     palette: {
-      mode: themeMode,
+      mode: paletteMode,
       primary: {
-        main: 'rgb(84,90,145)',
+        main: 'rgb(32,34,55)',
       },
     },
     breakpoints: {
@@ -16,6 +15,19 @@ const theme = (themeMode: ThemeMode) =>
         md: 900,
         lg: 1150,
         xl: 1536,
+      },
+    },
+    components: {
+      MuiAppBar: {
+        styleOverrides: {
+          colorPrimary: ({ ownerState, theme }) => ({
+            backgroundColor:
+              theme.palette.mode === 'light'
+                ? theme.palette.primary.light
+                : theme.palette.primary.dark,
+            color: theme.palette.primary.contrastText,
+          }),
+        },
       },
     },
   });
