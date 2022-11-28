@@ -1,5 +1,5 @@
 import { Root, SearchContainer } from '../styles/IndexSearch.styles';
-import { Box, InputBase } from '@mui/material';
+import { InputBase } from '@mui/material';
 interface Props {}
 const IndexSearch = (props: Props) => {
   return (

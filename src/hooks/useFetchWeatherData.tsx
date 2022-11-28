@@ -13,9 +13,9 @@ const BASEURL = 'https://api.openweathermap.org';
 /*Add lang prop to the url query to get the */
 
 interface Props {
-  locationCoord: LocationCoord;
+  locationCoord: LocationCoord | null;
   unit: UnitType;
-  setData: React.Dispatch<React.SetStateAction<WeatherData>>;
+  setData: React.Dispatch<React.SetStateAction<WeatherData | null>>;
   setSelectedCity: React.Dispatch<React.SetStateAction<CityData>>;
 }
 
@@ -27,7 +27,7 @@ function useFetchWeatherData({
 }: Props): void {
   const navigate = useNavigate();
   useEffect(() => {
-    if (locationCoord.lat && locationCoord.lon) {
+    if (locationCoord?.lat && locationCoord?.lon) {
       (async () => {
         try {
           const fetchedWeatherData = await fetchData(

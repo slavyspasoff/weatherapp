@@ -7,7 +7,14 @@ import {
   type MouseEventHandler,
   type ChangeEventHandler,
 } from 'react';
-import { Box, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+} from '@mui/material';
 import { WbSunnyTwoTone, Search } from '@mui/icons-material';
 import {
   AppBar,
@@ -19,17 +26,21 @@ import {
 } from '../styles/Navbar.styles';
 import fetchData from '../helpers/fetchData';
 import { getFullCountryName } from '../helpers/IntlHelpers';
-import { type UnitType, type CitiesData, type CityData } from '../types/Global.type';
+import {
+  type UnitType,
+  type CitiesData,
+  type CityData,
+} from '../types/Global.type';
 import KEY from '../../API_KEY';
-
+import { type LocationCoord } from '../types/Global.type';
 interface Props {
   toggleTheme: () => void;
   unit: UnitType;
-  fetchedCityList: CitiesData;
-  setFetchedCityList: Dispatch<SetStateAction<CitiesData>>;
-  setLocationCoord: Dispatch<SetStateAction<{ lat: number; lon: number }>>;
+  fetchedCityList: CitiesData | null;
+  setFetchedCityList: Dispatch<SetStateAction<CitiesData | null>>;
+  setLocationCoord: Dispatch<SetStateAction<LocationCoord | null>>;
   setUnit: Dispatch<SetStateAction<UnitType>>;
-  setSelectedCity: Dispatch<SetStateAction<CityData>>;
+  setSelectedCity: Dispatch<SetStateAction<CityData | null>>;
 }
 
 const BASEURL = 'https://api.openweathermap.org';
@@ -74,12 +85,21 @@ const Navbar = ({
     setUnit((prev) => (prev === 'metric' ? 'imperial' : 'metric'));
   };
 
-  const handleSearchInputValueChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
+  const handleSearchInputValueChange: ChangeEventHandler<HTMLInputElement> = (
+    evt
+  ) => {
     setSearchInputValue(evt.target.value);
   };
   //TODO: Add Type for city
   const handleCitySelection =
-    ({ country, lat, local_names, lon, name, state }: CityData): MouseEventHandler =>
+    ({
+      country,
+      lat,
+      local_names,
+      lon,
+      name,
+      state,
+    }: CityData): MouseEventHandler =>
     (evt) => {
       setSearchInputValue('');
       setSelectedCity({ country, name, local_names, lat, lon, state });
@@ -108,39 +128,41 @@ const Navbar = ({
             />
             <Search />
           </SearchContainer>
-          {fetchedCityList.length > 0 && searchInputValue.length > 0 && (
-            <List
-              sx={(theme) => ({
-                position: 'absolute',
-                top: '3rem',
-                width: '100%',
-                backgroundColor: theme.palette.grey[800],
-                borderRadius: '1rem',
-                overflow: 'hidden',
-              })}
-            >
-              {fetchedCityList.map((city, idx) => (
-                <Fragment key={`${city.lat}${city.lon}`}>
-                  <ListItem
-                    //TODO: Move the theming to styled component
-                    sx={(theme) => ({
-                      cursor: 'pointer',
-                      '&:hover': {
-                        backgroundColor: theme.palette.grey[900],
-                      },
-                    })}
-                    onClick={handleCitySelection(city)}
-                  >
-                    <ListItemText>
-                      {city.name}, {getFullCountryName(city.country)}{' '}
-                      {city.state && city.state}
-                    </ListItemText>
-                  </ListItem>
-                  {idx < fetchedCityList.length - 1 && <Divider />}
-                </Fragment>
-              ))}
-            </List>
-          )}
+          {fetchedCityList &&
+            fetchedCityList.length > 0 &&
+            searchInputValue.length > 0 && (
+              <List
+                sx={(theme) => ({
+                  position: 'absolute',
+                  top: '3rem',
+                  width: '100%',
+                  backgroundColor: theme.palette.grey[800],
+                  borderRadius: '1rem',
+                  overflow: 'hidden',
+                })}
+              >
+                {fetchedCityList?.map((city, idx) => (
+                  <Fragment key={`${city.lat}${city.lon}`}>
+                    <ListItem
+                      //TODO: Move the theming to styled component
+                      sx={(theme) => ({
+                        cursor: 'pointer',
+                        '&:hover': {
+                          backgroundColor: theme.palette.grey[900],
+                        },
+                      })}
+                      onClick={handleCitySelection(city)}
+                    >
+                      <ListItemText>
+                        {city.name}, {getFullCountryName(city.country)}{' '}
+                        {city.state && city.state}
+                      </ListItemText>
+                    </ListItem>
+                    {idx < fetchedCityList?.length - 1 && <Divider />}
+                  </Fragment>
+                ))}
+              </List>
+            )}
         </Box>
 
         <UnitContainer>

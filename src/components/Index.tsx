@@ -9,12 +9,13 @@ import { type WeatherData } from '../types/Weather.type';
 import { type CityData } from '../types/Global.type';
 
 interface Props {
-  data: WeatherData;
-  selectedCity: CityData;
+  data: WeatherData | null;
+  selectedCity: CityData | null;
   unit: string;
 }
 
-const BACKGROUND_IMG_URL = 'https://images.unsplash.com/photo-1483702721041-b23de737a886';
+const BACKGROUND_IMG_URL =
+  'https://images.unsplash.com/photo-1483702721041-b23de737a886';
 const timeNow = new Date();
 const minutes = timeNow.getMinutes();
 const hours = timeNow.getHours();
@@ -29,11 +30,13 @@ const Index = ({ data, selectedCity, unit }: Props) => {
       Math.round(temp)
     );
 
-  const windSpeedUnit = unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
+  const windSpeedUnit =
+    unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
   const formatWindSpeedUnit = (speed: number) =>
-    new Intl.NumberFormat(locale, { style: 'unit', unit: windSpeedUnit }).format(
-      Math.round(speed)
-    );
+    new Intl.NumberFormat(locale, {
+      style: 'unit',
+      unit: windSpeedUnit,
+    }).format(Math.round(speed));
 
   const windGustUnit = unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
   const formatWindGustUnit = (speed: number) =>
@@ -58,15 +61,18 @@ const Index = ({ data, selectedCity, unit }: Props) => {
     return directions[0];
   };
 
-  const tempCurrent = data.current ? formatTempUnit(data.current.temp) : '';
-  const tempDay = data.current ? formatTempUnit(data.daily[0].temp.day) : '';
-  const tempNight = data.current ? formatTempUnit(data.daily[0].temp.min) : '';
+  const tempCurrent = data?.current ? formatTempUnit(data?.current.temp) : '';
+  const tempDay = data?.current ? formatTempUnit(data?.daily[0].temp.day) : '';
+  const tempNight = data?.current
+    ? formatTempUnit(data?.daily[0].temp.min)
+    : '';
 
-  const getActive = () => (Math.floor(hours / 6) === 3 ? 0 : Math.floor(hours / 6) - 1);
+  const getActive = () =>
+    Math.floor(hours / 6) === 3 ? 0 : Math.floor(hours / 6) - 1;
 
   let forecastCards: JSX.Element[] = [];
-  if (data.daily) {
-    const todayFeelsLike = data.daily[0].feels_like;
+  if (data?.daily) {
+    const todayFeelsLike = data?.daily[0].feels_like;
     const timeOfTheDay = ['morn', 'day', 'eve', 'night'] as const;
     const timeOfTheDayText = ['morning', 'afternoon', 'evening', 'overnight'];
     forecastCards = timeOfTheDay.map((key, idx) => (
@@ -113,7 +119,7 @@ const Index = ({ data, selectedCity, unit }: Props) => {
             })}
           >
             {/*TODO: Add a loader and a better conditional */}
-            {selectedCity.name && data.current && (
+            {selectedCity?.name && data?.current && (
               <>
                 <Typography
                   variant='body1'
@@ -122,11 +128,13 @@ const Index = ({ data, selectedCity, unit }: Props) => {
                     marginRight: '1ch',
                   })}
                 >
-                  {selectedCity?.name}, {getFullCountryName(selectedCity?.country)}
+                  {selectedCity?.name},{' '}
+                  {getFullCountryName(selectedCity?.country)}
                 </Typography>
                 <Typography variant='body1'>
                   As of {String(hours)}:
-                  {String(minutes).length === 1 ? `0${minutes}` : minutes} ({timezone})
+                  {String(minutes).length === 1 ? `0${minutes}` : minutes} (
+                  {timezone})
                 </Typography>
               </>
             )}
@@ -136,24 +144,24 @@ const Index = ({ data, selectedCity, unit }: Props) => {
               {tempCurrent}
             </Typography>
             {/*TODO: Style the image*/}
-            {data.current && (
+            {data?.current && (
               <img
                 src={`http://openweathermap.org/img/wn/${data.current.weather[0].icon}@4x.png`}
               />
             )}
             <Typography variant='h4' component='p'>
-              {data.current && data.current.weather[0].description}
+              {data?.current && data?.current.weather[0].description}
             </Typography>
             <Typography variant='subtitle1' component='p'>
-              Day: {data.current && tempDay}
+              Day: {data?.current && tempDay}
             </Typography>
             <Typography variant='subtitle1' component='p'>
-              Night: {data.current && tempNight}
+              Night: {data?.current && tempNight}
             </Typography>
           </Box>
         </MainCard>
         {/*TODO: Add a loader and a better conditional, maybe make it global */}
-        {selectedCity.name && data.current && (
+        {selectedCity?.name && data?.current && (
           <MainCard
             sx={{
               backgroundColor: 'white',
@@ -167,7 +175,7 @@ const Index = ({ data, selectedCity, unit }: Props) => {
               paragraph
               sx={(theme) => ({ paddingInline: '2rem', fontSize: '1.15rem' })}
             >
-              Today's Forecast for {selectedCity.name},{' '}
+              Today's Forecast for {selectedCity?.name},{' '}
               {getFullCountryName(selectedCity?.country)}
             </Typography>
             <Box
@@ -206,19 +214,20 @@ const Index = ({ data, selectedCity, unit }: Props) => {
           </Typography>
           <Typography paragraph>
             Wind speed:{' '}
-            {data.current && formatWindSpeedUnit(data.current.wind_speed as number)}
+            {data?.current &&
+              formatWindSpeedUnit(data?.current.wind_speed as number)}
           </Typography>
           <Typography paragraph>
             Wind gust: {/*TODO: Write better conditional!  */}
-            {data.current && data.current.wind_gust
-              ? `${formatWindGustUnit(data.current.wind_gust)}`
+            {data?.current && data?.current.wind_gust
+              ? `${formatWindGustUnit(data?.current.wind_gust)}`
               : 'none'}
           </Typography>
           <Typography paragraph>
             Wind direction: {/*TODO: Write better conditional!  */}
-            {data.current &&
-              data.current.wind_deg &&
-              windDirection(data.current.wind_deg)}
+            {data?.current &&
+              data?.current.wind_deg &&
+              windDirection(data?.current.wind_deg)}
           </Typography>
         </MainCard>
       </Grid>

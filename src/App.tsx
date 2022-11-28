@@ -19,13 +19,13 @@ import Navbar from './components/Navbar';
 
 function App() {
   const [unit, setUnit] = useState<UnitType>('metric');
-  const [data, setData] = useState<WeatherData>({} as WeatherData);
-  const [locationCoord, setLocationCoord] = useState<LocationCoord>(
-    {} as LocationCoord
+  const [data, setData] = useState<WeatherData | null>(null);
+  const [locationCoord, setLocationCoord] = useState<LocationCoord | null>(
+    null
   );
-  const [selectedCity, setSelectedCity] = useState<CityData>({} as CityData);
-  const [fetchedCityList, setFetchedCityList] = useState<CitiesData>(
-    [] as CitiesData
+  const [selectedCity, setSelectedCity] = useState<CityData | null>(null);
+  const [fetchedCityList, setFetchedCityList] = useState<CitiesData | null>(
+    null
   );
 
   const [paletteMode, setPaletteMode, toggleTheme] = useTheme();
@@ -36,17 +36,17 @@ function App() {
     <ThemeProvider theme={theme(paletteMode)}>
       <CssBaseline />
 
+      {/* <Navbar
+        toggleTheme={toggleTheme}
+        fetchedCityList={fetchedCityList}
+        setFetchedCityList={setFetchedCityList}
+        setLocationCoord={setLocationCoord}
+        unit={unit}
+        setUnit={setUnit}
+        setSelectedCity={setSelectedCity}
+      /> */}
       <Routes>
         <Route path='/' element={<IndexSearch />} />
-        {/* <Navbar
-          toggleTheme={toggleTheme}
-          fetchedCityList={fetchedCityList}
-          setFetchedCityList={setFetchedCityList}
-          setLocationCoord={setLocationCoord}
-          unit={unit}
-          setUnit={setUnit}
-          setSelectedCity={setSelectedCity}
-        /> */}
         <Route
           path='/weather/today'
           element={

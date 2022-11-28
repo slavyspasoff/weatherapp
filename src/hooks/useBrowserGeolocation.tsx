@@ -3,7 +3,7 @@ import { type LocationCoord } from '../types/Global.type';
 import getBrowserCoordinates from '../helpers/getBrowserCoordinates';
 
 interface Props {
-  setLocationCoord: React.Dispatch<React.SetStateAction<LocationCoord>>;
+  setLocationCoord: React.Dispatch<React.SetStateAction<LocationCoord | null>>;
 }
 
 function useBrowserGeolocation({ setLocationCoord }: Props): void {
