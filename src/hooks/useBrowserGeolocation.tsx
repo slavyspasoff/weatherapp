@@ -6,18 +6,19 @@ interface Props {
   setLocationCoord: React.Dispatch<React.SetStateAction<LocationCoord>>;
 }
 
-function useBrowserGeolocation({ setLocationCoord }: Props) {
+function useBrowserGeolocation({ setLocationCoord }: Props): void {
   useEffect(() => {
     (async () => {
       try {
         const { coords } =
           (await getBrowserCoordinates()) as GeolocationPosition;
         setLocationCoord({ lat: coords.latitude, lon: coords.longitude });
-        //TODO: Add error handler
-      } catch (err) {}
+      } catch (err) {
+        if (err instanceof GeolocationPositionError || err instanceof Error) {
+          console.error(err.message);
+        }
+      }
     })();
   }, []);
-
-  return null;
 }
 export default useBrowserGeolocation;

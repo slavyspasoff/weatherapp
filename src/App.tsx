@@ -35,19 +35,20 @@ function App() {
   return (
     <ThemeProvider theme={theme(paletteMode)}>
       <CssBaseline />
-      <Navbar
-        toggleTheme={toggleTheme}
-        fetchedCityList={fetchedCityList}
-        setFetchedCityList={setFetchedCityList}
-        setLocationCoord={setLocationCoord}
-        unit={unit}
-        setUnit={setUnit}
-        setSelectedCity={setSelectedCity}
-      />
 
       <Routes>
+        <Route path='/' element={<IndexSearch />} />
+        {/* <Navbar
+          toggleTheme={toggleTheme}
+          fetchedCityList={fetchedCityList}
+          setFetchedCityList={setFetchedCityList}
+          setLocationCoord={setLocationCoord}
+          unit={unit}
+          setUnit={setUnit}
+          setSelectedCity={setSelectedCity}
+        /> */}
         <Route
-          path='/'
+          path='/weather/today'
           element={
             <Index data={data} selectedCity={selectedCity} unit={unit} />
           }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import {
   type LocationCoord,
   type UnitType,
@@ -24,7 +24,8 @@ function useFetchWeatherData({
   unit,
   setData,
   setSelectedCity,
-}: Props) {
+}: Props): void {
+  const navigate = useNavigate();
   useEffect(() => {
     if (locationCoord.lat && locationCoord.lon) {
       (async () => {
@@ -38,11 +39,12 @@ function useFetchWeatherData({
             `${BASEURL}/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
           );
           setSelectedCity(fetchedCityData[0] as CityData);
-          //TODO: ADD CUSTOM ERROR
-        } catch (err) {}
+          navigate('/weather/today', { replace: true });
+        } catch (err) {
+          console.error(err);
+        }
       })();
     }
   }, [locationCoord, unit]);
-  return null;
 }
 export default useFetchWeatherData;
