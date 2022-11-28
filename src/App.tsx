@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 
@@ -11,14 +11,11 @@ import {
 } from './types/Global.type';
 import useTheme from './hooks/useTheme';
 import useBrowserGeolocation from './hooks/useBrowserGeolocation';
+import useFetchWeatherData from './hooks/useFetchWeatherData';
 import Index from './components/Index';
 import IndexSearch from './components/IndexSeach';
 import theme from './theme';
-import fetchData from './helpers/fetchData';
 import Navbar from './components/Navbar';
-import KEY from '../API_KEY';
-
-const BASEURL = 'https://api.openweathermap.org';
 
 function App() {
   const [unit, setUnit] = useState<UnitType>('metric');
@@ -32,29 +29,8 @@ function App() {
   );
 
   const [paletteMode, setPaletteMode, toggleTheme] = useTheme();
-
   useBrowserGeolocation({ setLocationCoord });
-
-  {
-    /*Add lang prop to the url query to get the */
-  }
-  useEffect(() => {
-    if (locationCoord.lat && locationCoord.lon)
-      (async () => {
-        try {
-          const fetchedWeatherData = await fetchData(
-            `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&units=${unit}&appid=${KEY}`
-          );
-          setData(fetchedWeatherData as WeatherData);
-          console.log(fetchedWeatherData);
-          const fetchedCityData = await fetchData(
-            `${BASEURL}/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
-          );
-          setSelectedCity(fetchedCityData[0] as CityData);
-          //TODO: ADD CUSTOM ERROR
-        } catch (err) {}
-      })();
-  }, [locationCoord, unit]);
+  useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity });
 
   return (
     <ThemeProvider theme={theme(paletteMode)}>

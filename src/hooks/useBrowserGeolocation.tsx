@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { type LocationCoord } from '../types/Global.type';
 import getBrowserCoordinates from '../helpers/getBrowserCoordinates';
 
