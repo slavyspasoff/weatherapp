@@ -1,19 +1,11 @@
-import { Root, SearchContainer } from '../styles/IndexSearch.styles';
-import { InputBase } from '@mui/material';
+import { Root } from '../styles/IndexSearch.styles';
+import SearchInput from '../components/SearchInput';
+
 interface Props {}
 const IndexSearch = (props: Props) => {
   return (
     <Root>
-      <SearchContainer>
-        <InputBase
-          inputProps={{ 'aria-label': 'search' }}
-          placeholder='Search City or Zip Code'
-          sx={(theme) => ({
-            fontSize: 'clamp(1.25rem,5vw,2rem)',
-            color: 'black',
-          })}
-        ></InputBase>
-      </SearchContainer>
+      <SearchInput />
     </Root>
   );
 };

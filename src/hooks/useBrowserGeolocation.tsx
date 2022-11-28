@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { type LocationCoord } from '../types/Global.type';
 import getBrowserCoordinates from '../helpers/getBrowserCoordinates';
-
 interface Props {
   setLocationCoord: React.Dispatch<React.SetStateAction<LocationCoord | null>>;
 }

@@ -1,8 +1,7 @@
 import { styled } from '@mui/material';
-import backgroundImage from '../assets/images/searchIndex.background.jpeg';
-import snow from '../assets/images/snow.jpeg';
+import background from '../assets/images/index.background.jpeg';
 const Root = styled('div')({
-  backgroundImage: `url(${snow})`,
+  backgroundImage: `url(${background})`,
   height: '100vh',
   width: '100vw',
   display: 'grid',
@@ -25,16 +24,4 @@ const Root = styled('div')({
   },
 });
 
-const SearchContainer = styled('div')({
-  height: '5vh',
-  minHeight: '70px',
-  width: '80%',
-  maxWidth: '600px',
-  borderRadius: '1rem',
-  paddingInline: '1rem',
-  backgroundColor: 'rgba(255,255,255,0.7)',
-  display: 'grid',
-  placeItems: 'center',
-});
-
-export { Root, SearchContainer };
+export { Root };

@@ -16,7 +16,7 @@ interface Props {
   locationCoord: LocationCoord | null;
   unit: UnitType;
   setData: React.Dispatch<React.SetStateAction<WeatherData | null>>;
-  setSelectedCity: React.Dispatch<React.SetStateAction<CityData>>;
+  setSelectedCity: React.Dispatch<React.SetStateAction<CityData | null>>;
 }
 
 function useFetchWeatherData({
