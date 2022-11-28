@@ -10,11 +10,11 @@ import {
   type CityData,
 } from './types/Global.type';
 import useTheme from './hooks/useTheme';
+import useBrowserGeolocation from './hooks/useBrowserGeolocation';
 import Index from './components/Index';
 import IndexSearch from './components/IndexSeach';
 import theme from './theme';
 import fetchData from './helpers/fetchData';
-import getBrowserCoordinates from './helpers/getBrowserCoordinates';
 import Navbar from './components/Navbar';
 import KEY from '../API_KEY';
 
@@ -33,16 +33,7 @@ function App() {
 
   const [paletteMode, setPaletteMode, toggleTheme] = useTheme();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { coords } =
-          (await getBrowserCoordinates()) as GeolocationPosition;
-        setLocationCoord({ lat: coords.latitude, lon: coords.longitude });
-        //TODO: Add error handler
-      } catch (err) {}
-    })();
-  }, []);
+  useBrowserGeolocation({ setLocationCoord });
 
   {
     /*Add lang prop to the url query to get the */
