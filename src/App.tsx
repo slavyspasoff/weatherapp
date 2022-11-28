@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import {
   ThemeProvider,
   CssBaseline,
@@ -6,6 +7,7 @@ import {
   type PaletteMode,
 } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
+
 import { type WeatherData } from './types/Weather.type';
 import {
   type UnitType,
@@ -14,6 +16,7 @@ import {
   type CityData,
 } from './types/Global.type';
 import Index from './components/Index';
+import IndexSearch from './components/IndexSeach';
 import theme from './theme';
 import fetchData from './helpers/fetchData';
 import getBrowserCoordinates from './helpers/getBrowserCoordinates';
@@ -26,23 +29,28 @@ function App() {
   const [paletteMode, setPaletteMode] = useState<PaletteMode>('light');
   const [unit, setUnit] = useState<UnitType>('metric');
   const [data, setData] = useState<WeatherData>({} as WeatherData);
-  const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
+  const [locationCoord, setLocationCoord] = useState<LocationCoord>(
+    {} as LocationCoord
+  );
   const [selectedCity, setSelectedCity] = useState<CityData>({} as CityData);
-  const [fetchedCityList, setFetchedCityList] = useState<CitiesData>([] as CitiesData);
+  const [fetchedCityList, setFetchedCityList] = useState<CitiesData>(
+    [] as CitiesData
+  );
 
   const toggleTheme = () => {
     setPaletteMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark');
-  // useEffect(() => {
-  //   if (prefersDarkMode) setPaletteMode('dark');
-  // }, []);
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark');
+  useEffect(() => {
+    if (prefersDarkMode) setPaletteMode('dark');
+  }, []);
 
   useEffect(() => {
     (async () => {
       try {
-        const { coords } = (await getBrowserCoordinates()) as GeolocationPosition;
+        const { coords } =
+          (await getBrowserCoordinates()) as GeolocationPosition;
         setLocationCoord({ lat: coords.latitude, lon: coords.longitude });
         //TODO: Add error handler
       } catch (err) {}
@@ -86,7 +94,9 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<Index data={data} selectedCity={selectedCity} unit={unit} />}
+          element={
+            <Index data={data} selectedCity={selectedCity} unit={unit} />
+          }
         />
       </Routes>
     </ThemeProvider>

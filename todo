@@ -1,0 +1,8 @@
+Use mui stack for today's forecast.
+Use mui grid instead in the main.
+Use Box instead of divs.
+Use theme.palette.text.secondary instead of alpha.
+Add cards and card action instead of divs and boxes.
+Use CardMedia for the image.
+Add search by post code.
+Add tool-tips on over.
