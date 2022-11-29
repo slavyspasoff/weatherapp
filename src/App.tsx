@@ -15,44 +15,38 @@ import useFetchWeatherData from './hooks/useFetchWeatherData';
 import Index from './components/Index';
 import IndexSearch from './components/IndexSeach';
 import theme from './theme';
-import Navbar from './components/Navbar';
+import Weather from './components/Weather';
 
 function App() {
   const [unit, setUnit] = useState<UnitType>('metric');
   const [data, setData] = useState<WeatherData | null>(null);
-  const [locationCoord, setLocationCoord] = useState<LocationCoord | null>(
-    null
-  );
+  const [locationCoord, setLocationCoord] = useState<LocationCoord | null>(null);
   const [selectedCity, setSelectedCity] = useState<CityData | null>(null);
-  const [fetchedCityList, setFetchedCityList] = useState<CitiesData | null>(
-    null
-  );
-
+  const [fetchedCityList, setFetchedCityList] = useState<CitiesData | null>(null);
   const [paletteMode, setPaletteMode, toggleTheme] = useTheme();
+
   useBrowserGeolocation({ setLocationCoord });
   useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity });
 
   return (
     <ThemeProvider theme={theme(paletteMode)}>
       <CssBaseline />
-
-      {/* <Navbar
-        toggleTheme={toggleTheme}
-        fetchedCityList={fetchedCityList}
-        setFetchedCityList={setFetchedCityList}
-        setLocationCoord={setLocationCoord}
-        unit={unit}
-        setUnit={setUnit}
-        setSelectedCity={setSelectedCity}
-      /> */}
       <Routes>
         <Route path='/' element={<IndexSearch />} />
         <Route
-          path='/weather/today'
+          path='weather'
           element={
-            <Index data={data} selectedCity={selectedCity} unit={unit} />
+            <Weather
+              toggleTheme={toggleTheme}
+              fetchedCityList={fetchedCityList}
+              setFetchedCityList={setFetchedCityList}
+              setLocationCoord={setLocationCoord}
+              unit={unit}
+              setUnit={setUnit}
+              setSelectedCity={setSelectedCity}
+            />
           }
-        />
+        ></Route>
       </Routes>
     </ThemeProvider>
   );

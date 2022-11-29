@@ -1,7 +1,9 @@
-import { useState, Fragment, type ChangeEventHandler } from 'react';
+import { useState, useEffect, Fragment, type ChangeEventHandler } from 'react';
 import { CircularProgress } from '@mui/material';
-
+import fetchData from '../helpers/fetchData';
 import { SearchContainer, SearchInput } from '../styles/SearchInput.styles';
+
+const BASEURL = 'https://api.openweathermap.org';
 
 interface Props {}
 function searchInput({}: Props) {
