@@ -2,12 +2,12 @@ import {
   useState,
   useEffect,
   Fragment,
+  useContext,
   type ChangeEventHandler,
-  type Dispatch,
-  type SetStateAction,
   type MouseEventHandler,
 } from 'react';
 import { CircularProgress, List, ListItem, ListItemText, Divider } from '@mui/material';
+import { ctx } from './Global.context';
 import fetchData from '../helpers/fetchData';
 import { getFullCountryName } from '../helpers/IntlHelpers';
 import { SearchContainer, SearchInput } from '../styles/SearchInput.styles';
@@ -16,18 +16,10 @@ import KEY from '../../API_KEY';
 
 const BASEURL = 'https://api.openweathermap.org';
 
-interface Props {
-  fetchedCityList: CityData[] | null;
-  setFetchedCityList: Dispatch<SetStateAction<CityData[] | null>>;
-  setSelectedCity: Dispatch<SetStateAction<CityData | null>>;
-  setLocationCoord: Dispatch<SetStateAction<LocationCoord | null>>;
-}
-function searchInput({
-  setFetchedCityList,
-  fetchedCityList,
-  setSelectedCity,
-  setLocationCoord,
-}: Props) {
+interface Props {}
+function searchInput({}: Props) {
+  const { setSelectedCity, setLocationCoord, setFetchedCityList, fetchedCityList } =
+    useContext(ctx);
   const [searchInputValue, setSearchInputValue] = useState<string>('');
 
   const handleSearchInputValueChange: ChangeEventHandler<HTMLInputElement> = (evt) => {

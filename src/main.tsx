@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import GlobalContextProvider from './components/Global.context';
 import App from './App';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -11,7 +12,9 @@ import './index.css';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <GlobalContextProvider>
+        <App />
+      </GlobalContextProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

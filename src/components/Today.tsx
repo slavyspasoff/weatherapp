@@ -1,17 +1,14 @@
-import MainCard from './MainCard';
+import { useContext } from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import { alpha } from '@mui/material/styles';
+import { ctx } from './Global.context';
+import MainCard from './MainCard';
 import GridContainer from './GridContainer';
 import {} from '../styles/Today.styles';
 import { getFullCountryName } from '../helpers/IntlHelpers';
 import TodaysForecastCard from './TodaysForecastCard';
-import { type CityData, type WeatherData } from '../types/Global.type';
 
-interface Props {
-  data: WeatherData | null;
-  selectedCity: CityData | null;
-  unit: string;
-}
+interface Props {}
 
 const BACKGROUND_IMG_URL = 'https://images.unsplash.com/photo-1483702721041-b23de737a886';
 
@@ -20,7 +17,8 @@ const minutes = timeNow.getMinutes();
 const hours = timeNow.getHours();
 const timezone = timeNow.toTimeString().replace(/[0-9()+:]/g, '');
 
-const Index = ({ data, selectedCity, unit }: Props) => {
+const Index = ({}: Props) => {
+  const { data, selectedCity, unit } = useContext(ctx);
   //TODO: Move Intl to helper function and combine them to a single function
   const locale = navigator.language || 'en-EN';
   const tempUnit = unit === 'metric' ? 'celsius' : 'fahrenheit';

@@ -1,28 +1,17 @@
-import { type Dispatch, type SetStateAction } from 'react';
+import { useContext, type Dispatch, type SetStateAction } from 'react';
 import { Box, Typography } from '@mui/material';
 import { WbSunnyTwoTone } from '@mui/icons-material';
+import { ctx } from './Global.context';
 import { AppBar, Root, UnitContainer, Unit } from '../styles/Navbar.styles';
-import { type UnitType, type CityData } from '../types/Global.type';
-import { type LocationCoord } from '../types/Global.type';
+import { type UnitType } from '../types/Global.type';
+
 import SearchInput from '../components/SearchInput';
-interface Props {
-  toggleTheme: () => void;
-  unit: UnitType;
-  fetchedCityList: CityData[] | null;
-  setFetchedCityList: Dispatch<SetStateAction<CityData[] | null>>;
-  setLocationCoord: Dispatch<SetStateAction<LocationCoord | null>>;
-  setUnit: Dispatch<SetStateAction<UnitType>>;
-  setSelectedCity: Dispatch<SetStateAction<CityData | null>>;
-}
+interface Props {}
 
 const BASEURL = 'https://api.openweathermap.org';
 
-const Navbar = ({
-  toggleTheme,
-
-  unit,
-  setUnit,
-}: Props) => {
+function Navbar({}: Props) {
+  const { toggleTheme, unit, setUnit } = useContext(ctx);
   const toggleTempUnit = () => {
     setUnit((prev) => (prev === 'metric' ? 'imperial' : 'metric'));
   };
@@ -51,6 +40,6 @@ const Navbar = ({
       </Root>
     </AppBar>
   );
-};
+}
 
 export default Navbar;
