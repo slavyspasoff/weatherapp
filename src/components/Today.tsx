@@ -5,8 +5,7 @@ import GridContainer from './GridContainer';
 import {} from '../styles/Index.styles';
 import { getFullCountryName } from '../helpers/IntlHelpers';
 import TodaysForecastCard from './TodaysForecastCard';
-import { type WeatherData } from '../types/Weather.type';
-import { type CityData } from '../types/Global.type';
+import { type CityData, type WeatherData } from '../types/Global.type';
 
 interface Props {
   data: WeatherData | null;
@@ -14,8 +13,8 @@ interface Props {
   unit: string;
 }
 
-const BACKGROUND_IMG_URL =
-  'https://images.unsplash.com/photo-1483702721041-b23de737a886';
+const BACKGROUND_IMG_URL = 'https://images.unsplash.com/photo-1483702721041-b23de737a886';
+
 const timeNow = new Date();
 const minutes = timeNow.getMinutes();
 const hours = timeNow.getHours();
@@ -30,8 +29,7 @@ const Index = ({ data, selectedCity, unit }: Props) => {
       Math.round(temp)
     );
 
-  const windSpeedUnit =
-    unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
+  const windSpeedUnit = unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
   const formatWindSpeedUnit = (speed: number) =>
     new Intl.NumberFormat(locale, {
       style: 'unit',
@@ -63,12 +61,9 @@ const Index = ({ data, selectedCity, unit }: Props) => {
 
   const tempCurrent = data?.current ? formatTempUnit(data?.current.temp) : '';
   const tempDay = data?.current ? formatTempUnit(data?.daily[0].temp.day) : '';
-  const tempNight = data?.current
-    ? formatTempUnit(data?.daily[0].temp.min)
-    : '';
+  const tempNight = data?.current ? formatTempUnit(data?.daily[0].temp.min) : '';
 
-  const getActive = () =>
-    Math.floor(hours / 6) === 3 ? 0 : Math.floor(hours / 6) - 1;
+  const getActive = () => (Math.floor(hours / 6) === 3 ? 0 : Math.floor(hours / 6) - 1);
 
   let forecastCards: JSX.Element[] = [];
   if (data?.daily) {
@@ -128,13 +123,11 @@ const Index = ({ data, selectedCity, unit }: Props) => {
                     marginRight: '1ch',
                   })}
                 >
-                  {selectedCity?.name},{' '}
-                  {getFullCountryName(selectedCity?.country)}
+                  {selectedCity?.name}, {getFullCountryName(selectedCity?.country)}
                 </Typography>
                 <Typography variant='body1'>
                   As of {String(hours)}:
-                  {String(minutes).length === 1 ? `0${minutes}` : minutes} (
-                  {timezone})
+                  {String(minutes).length === 1 ? `0${minutes}` : minutes} ({timezone})
                 </Typography>
               </>
             )}
@@ -214,8 +207,7 @@ const Index = ({ data, selectedCity, unit }: Props) => {
           </Typography>
           <Typography paragraph>
             Wind speed:{' '}
-            {data?.current &&
-              formatWindSpeedUnit(data?.current.wind_speed as number)}
+            {data?.current && formatWindSpeedUnit(data?.current.wind_speed as number)}
           </Typography>
           <Typography paragraph>
             Wind gust: {/*TODO: Write better conditional!  */}
