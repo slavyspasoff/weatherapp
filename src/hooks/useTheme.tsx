@@ -12,6 +12,6 @@ function useTheme() {
     if (prefersDarkMode) setPaletteMode('dark');
   }, []);
 
-  return [paletteMode, setPaletteMode, toggleTheme] as const;
+  return [paletteMode, toggleTheme] as const;
 }
 export default useTheme;

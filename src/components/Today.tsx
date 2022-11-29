@@ -2,7 +2,7 @@ import MainCard from './MainCard';
 import { Box, Typography, Grid } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import GridContainer from './GridContainer';
-import {} from '../styles/Index.styles';
+import {} from '../styles/Today.styles';
 import { getFullCountryName } from '../helpers/IntlHelpers';
 import TodaysForecastCard from './TodaysForecastCard';
 import { type CityData, type WeatherData } from '../types/Global.type';

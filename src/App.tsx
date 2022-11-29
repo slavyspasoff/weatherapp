@@ -12,7 +12,7 @@ import useTheme from './hooks/useTheme';
 import useBrowserGeolocation from './hooks/useBrowserGeolocation';
 import useFetchWeatherData from './hooks/useFetchWeatherData';
 import Today from './components/Today';
-import IndexSearch from './components/IndexSeach';
+import Index from './components/Index';
 import theme from './theme';
 import Weather from './components/Weather';
 
@@ -22,7 +22,7 @@ function App() {
   const [locationCoord, setLocationCoord] = useState<LocationCoord | null>(null);
   const [selectedCity, setSelectedCity] = useState<CityData | null>(null);
   const [fetchedCityList, setFetchedCityList] = useState<CityData[] | null>(null);
-  const [paletteMode, setPaletteMode, toggleTheme] = useTheme();
+  const [paletteMode, toggleTheme] = useTheme();
 
   useBrowserGeolocation({ setLocationCoord });
   useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity });
@@ -31,7 +31,17 @@ function App() {
     <ThemeProvider theme={theme(paletteMode)}>
       <CssBaseline />
       <Routes>
-        <Route path='/' element={<IndexSearch />} />
+        <Route
+          path='/'
+          element={
+            <Index
+              setFetchedCityList={setFetchedCityList}
+              fetchedCityList={fetchedCityList}
+              setSelectedCity={setSelectedCity}
+              setLocationCoord={setLocationCoord}
+            />
+          }
+        />
         <Route
           path='weather'
           element={
