@@ -3,12 +3,9 @@ import { Box, Typography } from '@mui/material';
 import { WbSunnyTwoTone } from '@mui/icons-material';
 import { ctx } from './Global.context';
 import { AppBar, Root, UnitContainer, Unit } from '../styles/Navbar.styles';
-import { type UnitType } from '../types/Global.type';
 
-import SearchInput from '../components/SearchInput';
+import SearchBar from '../components/SearchBar';
 interface Props {}
-
-const BASEURL = 'https://api.openweathermap.org';
 
 function Navbar({}: Props) {
   const { toggleTheme, unit, setUnit } = useContext(ctx);
@@ -28,7 +25,7 @@ function Navbar({}: Props) {
             Weather App
           </Typography>
         </Box>
-        <SearchInput />
+        <SearchBar sx={{ height: '60%', borderRadius: '3em' }} />
         <UnitContainer>
           <Unit selected={unit === 'metric'} onClick={toggleTempUnit}>
             &#8451;

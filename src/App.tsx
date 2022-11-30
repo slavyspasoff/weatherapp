@@ -10,12 +10,17 @@ import theme from './theme';
 import Weather from './components/Weather';
 
 function App() {
-  const { setLocationCoord, locationCoord, unit, setData, setSelectedCity, paletteMode } =
-    useContext(ctx);
+  const {
+    setLocationCoord,
+    locationCoord,
+    unit,
+    setData,
+    setSelectedCity,
+    paletteMode,
+  } = useContext(ctx);
 
   useBrowserGeolocation({ setLocationCoord });
   useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity });
-
   return (
     <ThemeProvider theme={theme(paletteMode)}>
       <CssBaseline />

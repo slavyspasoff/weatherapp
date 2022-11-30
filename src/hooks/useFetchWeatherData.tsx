@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ctx } from '../components/Global.context';
 import {
   type LocationCoord,
   type UnitType,
   type CityData,
+  type WeatherData,
 } from '../types/Global.type';
-import { type WeatherData } from '../types/Weather.type';
 import fetchData from '../helpers/fetchData';
-import KEY from '../../API_KEY';
 
-const BASEURL = 'https://api.openweathermap.org';
 /*Add lang prop to the url query to get the */
 
 interface Props {
@@ -26,6 +25,7 @@ function useFetchWeatherData({
   setSelectedCity,
 }: Props): void {
   const navigate = useNavigate();
+  const { KEY, BASEURL } = useContext(ctx);
   useEffect(() => {
     if (locationCoord?.lat && locationCoord?.lon) {
       (async () => {
