@@ -1,92 +1,33 @@
-import { useEffect, useState } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { type WeatherData } from './types/WeatherDataType';
-import { type CitiesData, type CityData } from './types/CitiesDataType';
-import { type UnitType, type LocationCoord } from './types/GlobalTypes';
-import Index from './components/Index';
-import fetchData from './helpers/fetchData';
-import getBrowserCoordinates from './helpers/getBrowserCoordinates';
-import Navbar from './components/Navbar';
-import KEY from '../API_KEY';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
-const BASEURL = 'https://api.openweathermap.org';
+import { ctx } from './components/Context/Provider.context';
+import useBrowserGeolocation from './hooks/useBrowserGeolocation';
+import useFetchWeatherData from './hooks/useFetchWeatherData';
+import theme from './theme';
 
-function App() {
-  const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light');
-  const [tempUnit, setTempUnit] = useState<UnitType>('metric');
-  const [data, setData] = useState<WeatherData>({} as WeatherData);
-  const [locationCoord, setLocationCoord] = useState<LocationCoord>({} as LocationCoord);
-  const [selectedCity, setSelectedCity] = useState<CityData>({} as CityData);
-  const [fetchedCityList, setFetchedCityList] = useState<CitiesData>([] as CitiesData);
+import Homepage from './components/Homepage/Homepage';
+import Weather from './components/Weather/Weather';
+import Today from './components/Today/Today';
+interface Props {}
 
-  const toggleTheme = () => {
-    setThemeMode((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
-
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-    },
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 900,
-        lg: 1150,
-        xl: 1536,
-      },
-    },
-  });
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { coords } = (await getBrowserCoordinates()) as GeolocationPosition;
-        setLocationCoord({ lat: coords.latitude, lon: coords.longitude });
-        //TODO: Add error handler
-      } catch (err) {}
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (locationCoord.lat && locationCoord.lon)
-      (async () => {
-        try {
-          const fetchedWeatherData = await fetchData(
-            `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&units=${tempUnit}&appid=${KEY}`
-          );
-          setData(fetchedWeatherData as WeatherData);
-          console.log(fetchedWeatherData);
-          const fetchedCityData = await fetchData(
-            `${BASEURL}/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
-          );
-          setSelectedCity(fetchedCityData[0] as CityData);
-          //TODO: ADD CUSTOM ERROR
-        } catch (err) {}
-      })();
-  }, [locationCoord, tempUnit]);
-
+function App({}: Props) {
+  const { setLocationCoord, locationCoord, unit, setData, setSelectedCity, paletteMode } =
+    useContext(ctx);
+  useBrowserGeolocation({ setLocationCoord });
+  useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity });
   return (
-    <ThemeProvider theme={theme}>
-      <Navbar
-        toggleTheme={toggleTheme}
-        fetchedCityList={fetchedCityList}
-        setFetchedCityList={setFetchedCityList}
-        setLocationCoord={setLocationCoord}
-        tempUnit={tempUnit}
-        setTempUnit={setTempUnit}
-        setSelectedCity={setSelectedCity}
-      />
+    <ThemeProvider theme={theme(paletteMode)}>
+      <CssBaseline />
 
       <Routes>
-        <Route
-          path='/'
-          element={<Index data={data} selectedCity={selectedCity} tempUnit={tempUnit} />}
-        />
+        <Route path='/' element={<Homepage />} />
+        <Route path='weather' element={<Weather />}>
+          <Route path='today' element={<Today />} />
+        </Route>
       </Routes>
     </ThemeProvider>
   );
 }
-
 export default App;
