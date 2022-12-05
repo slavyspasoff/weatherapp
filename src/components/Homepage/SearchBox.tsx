@@ -1,4 +1,4 @@
-import { useState, useContext, type MouseEventHandler } from 'react';
+import { useState, useRef, useContext, type MouseEventHandler } from 'react';
 import Box from '@mui/material/Box';
 
 import { type CityData } from '../../types/global.types';
@@ -9,12 +9,13 @@ import SearchInput from './SearchInput';
 import ItemList from './ItemList';
 
 interface Props {}
-
+// TODO: DUPLICATION WITH NAVBAR SEARCH BAR MOVE TO A HELPER OR SINGLE ELEMENT
 function SearchBox({}: Props) {
   const { setSelectedCity, setLocationCoord } = useContext(ctx);
   const [fetchedCitiesList, setFetchedCitiesList] = useState<CityData[] | null>(null);
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [lastSearchedCity, setLastSearchedCity] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleCitySelection =
     ({ country, lat, local_names, lon, name, state }: CityData): MouseEventHandler =>
@@ -23,6 +24,10 @@ function SearchBox({}: Props) {
       setSelectedCity({ country, name, local_names, lat, lon, state });
       setLocationCoord({ lat, lon });
     };
+
+  const handleSearchBoxClick: MouseEventHandler<HTMLDivElement> = (evt) => {
+    inputRef.current?.focus();
+  };
 
   useFetchCitiesList({
     searchInputValue,
@@ -44,13 +49,17 @@ function SearchBox({}: Props) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        cursor: 'text',
         '&:hover': {
           backgroundColor: 'rgba(255,255,255,0.8)',
         },
       })}
+      onClick={handleSearchBoxClick}
     >
-      <SearchInput value={searchInputValue} setValue={setSearchInputValue} />
-      {isListShown && <ItemList cities={fetchedCitiesList} setCity={handleCitySelection} />}
+      <SearchInput value={searchInputValue} setValue={setSearchInputValue} inputRef={inputRef} />
+      {isListShown && (
+        <ItemList cities={fetchedCitiesList} setCity={handleCitySelection} listOffset={'6.75vh'} />
+      )}
     </Box>
   );
 }

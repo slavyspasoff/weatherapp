@@ -1,11 +1,17 @@
-import { type ChangeEventHandler, type Dispatch, type SetStateAction } from 'react';
+import {
+  type ChangeEventHandler,
+  type Dispatch,
+  type SetStateAction,
+  type MutableRefObject,
+} from 'react';
 import InputBase from '@mui/material/InputBase';
 
 interface Props {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
+  inputRef: MutableRefObject<HTMLInputElement | null>;
 }
-function SearchInput({ value, setValue }: Props) {
+function SearchInput({ value, setValue, inputRef }: Props) {
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
     setValue(evt.target.value);
   };
@@ -21,6 +27,7 @@ function SearchInput({ value, setValue }: Props) {
           textAlign: 'center',
         },
       }}
+      inputRef={inputRef}
       value={value}
       onChange={handleInputChange}
       inputProps={{ 'aria-label': 'search' }}

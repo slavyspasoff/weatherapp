@@ -8,9 +8,10 @@ function useTheme() {
     setPaletteMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark');
-  useEffect(() => {
-    if (prefersDarkMode) setPaletteMode('dark');
-  }, []);
+  //TODO: Enable after you're done with the light theme
+  // useEffect(() => {
+  //   if (prefersDarkMode) setPaletteMode('dark');
+  // }, []);
   return [paletteMode, toggleTheme] as const;
 }
 export default useTheme;

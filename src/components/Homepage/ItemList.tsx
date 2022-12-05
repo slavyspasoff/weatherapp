@@ -11,9 +11,10 @@ import { getFullCountryName } from '../../helpers/IntlHelpers';
 interface Props {
   cities: CityData[] | null;
   setCity: (v: CityData) => MouseEventHandler;
+  listOffset: string;
 }
 
-function ItemList({ cities, setCity }: Props) {
+function ItemList({ cities, setCity, listOffset }: Props) {
   const render = cities!.map((city, idx) => {
     const { name, country, state, lat, lon, local_names } = city;
     //TODO: Show the name based on the browser locale from local_names
@@ -26,7 +27,7 @@ function ItemList({ cities, setCity }: Props) {
           sx={(theme) => ({
             cursor: 'pointer',
             '&:hover': {
-              backgroundColor: theme.palette.grey[900],
+              backgroundColor: theme.palette.grey[300],
             },
           })}
         >
@@ -46,9 +47,10 @@ function ItemList({ cities, setCity }: Props) {
     <List
       sx={(theme) => ({
         position: 'absolute',
-        top: '6.75vh',
+        top: listOffset,
         width: '95%',
-        backgroundColor: theme.palette.grey[800],
+        backgroundColor: theme.palette.grey[100],
+        color: theme.palette.common.black,
         paddingBlock: 0,
         borderRadius: 1,
         overflow: 'hidden',
