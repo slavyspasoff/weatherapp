@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 
-import SearchBox from './SearchBox';
+import SearchBox from '../SearchBar/SearchBox';
 
 import backgroundImage from '../../assets/images/homepage.background.jpeg';
 
@@ -33,7 +33,11 @@ function Homepage({}: Props) {
         },
       })}
     >
-      <SearchBox />
+      <SearchBox
+        containerStyles={{ height: '6.5vh', borderRadius: '1em' }}
+        listOffset={'6.5vh'}
+        isFocusedOnLoad
+      />
     </Box>
   );
 }

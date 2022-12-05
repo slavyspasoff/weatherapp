@@ -10,8 +10,9 @@ interface Props {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   inputRef: MutableRefObject<HTMLInputElement | null>;
+  isFocusedOnLoad: boolean;
 }
-function SearchInput({ value, setValue, inputRef }: Props) {
+function SearchInput({ value, setValue, inputRef, isFocusedOnLoad }: Props) {
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
     setValue(evt.target.value);
   };
@@ -32,6 +33,7 @@ function SearchInput({ value, setValue, inputRef }: Props) {
       onChange={handleInputChange}
       inputProps={{ 'aria-label': 'search' }}
       placeholder='Search City or Zip Code'
+      autoFocus={isFocusedOnLoad}
     />
   );
 }

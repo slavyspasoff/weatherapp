@@ -8,9 +8,14 @@ import useFetchCitiesList from '../../hooks/useFetchCitiesList';
 import SearchInput from './SearchInput';
 import ItemList from './ItemList';
 
-interface Props {}
+interface Props {
+  listOffset: string;
+  //TODO: FIND THE CORRECT TYPE (it's not SxProps) so Typescript chills out.
+  containerStyles: object;
+  isFocusedOnLoad?: boolean | undefined;
+}
 // TODO: DUPLICATION WITH NAVBAR SEARCH BAR MOVE TO A HELPER OR SINGLE ELEMENT
-function SearchBox({}: Props) {
+function SearchBox({ containerStyles, listOffset, isFocusedOnLoad = false }: Props) {
   const { setSelectedCity, setLocationCoord } = useContext(ctx);
   const [fetchedCitiesList, setFetchedCitiesList] = useState<CityData[] | null>(null);
   const [searchInputValue, setSearchInputValue] = useState<string>('');
@@ -42,23 +47,31 @@ function SearchBox({}: Props) {
         position: 'relative',
         width: '80%',
         maxWidth: '600px',
-        height: '6.5vh',
-        borderRadius: '1em',
         paddingInline: theme.spacing(4),
         backgroundColor: 'rgba(255,255,255,0.7)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'text',
+        ...containerStyles,
         '&:hover': {
           backgroundColor: 'rgba(255,255,255,0.8)',
         },
       })}
       onClick={handleSearchBoxClick}
     >
-      <SearchInput value={searchInputValue} setValue={setSearchInputValue} inputRef={inputRef} />
+      <SearchInput
+        value={searchInputValue}
+        setValue={setSearchInputValue}
+        inputRef={inputRef}
+        isFocusedOnLoad={isFocusedOnLoad}
+      />
       {isListShown && (
-        <ItemList cities={fetchedCitiesList} setCity={handleCitySelection} listOffset={'6.75vh'} />
+        <ItemList
+          cities={fetchedCitiesList}
+          setCity={handleCitySelection}
+          listOffset={listOffset}
+        />
       )}
     </Box>
   );
