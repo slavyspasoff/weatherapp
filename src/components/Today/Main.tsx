@@ -1,17 +1,22 @@
+import { useContext } from 'react';
 import Box from '@mui/material/Box';
-import { alpha } from '@mui/material';
 
-import CardBack from '../../styles/Card/CardBack.styles';
+import CurrentConditionCard from './CurrentConditionCard';
+import { ctx } from '../Context/Provider.context';
+import { CityData } from '../../types/global.types';
+
 interface Props {}
 function Main({}: Props) {
-  return (
-    <Box
-      component='main'
-      sx={(theme) => ({
-        height: 1200,
-        backgroundColor: alpha(theme.palette.grey[100], 0.1),
-      })}
-    ></Box>
-  );
+   const { data, selectedCity } = useContext(ctx);
+   return (
+      <Box
+         component='main'
+         sx={(theme) => ({
+            paddingInline: theme.spacing(2, 1),
+         })}
+      >
+         <CurrentConditionCard data={data} city={selectedCity} />
+      </Box>
+   );
 }
 export default Main;

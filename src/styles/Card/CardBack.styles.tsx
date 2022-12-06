@@ -2,9 +2,11 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material';
 
 const Card = styled(Box)(({ theme }) => ({
-  borderRadius: 2,
+  borderRadius: 6,
   backgroundColor: theme.palette.grey[200],
+  marginTop: theme.spacing(2),
   height: 400,
+  overflow: 'hidden',
 }));
 
 export default Card;

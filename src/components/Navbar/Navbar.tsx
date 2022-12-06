@@ -23,6 +23,8 @@ function Navbar({}: Props) {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
+        gap: theme.spacing(2),
+        paddingInline: theme.spacing(2),
       })}
     >
       <Box>Logo</Box>

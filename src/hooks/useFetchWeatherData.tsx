@@ -29,7 +29,6 @@ function useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity }: 
             `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&units=${unit}&appid=${KEY}`
           );
           setData(fetchedWeatherData as WeatherData);
-          console.log(fetchedWeatherData);
           const fetchedCityData = await fetchData(
             `${BASEURL}/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
           );

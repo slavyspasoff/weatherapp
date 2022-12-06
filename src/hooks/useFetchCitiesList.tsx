@@ -31,7 +31,6 @@ function useFetchCitiesList({
             { signal }
           );
           setFetchedCitiesList(data as CityData[]);
-          console.log(data);
           //TODO: ADD CUSTOM ERROR
           setLastSearchedCity(searchInputValue);
         } catch (err) {}
