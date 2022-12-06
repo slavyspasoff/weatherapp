@@ -1,7 +1,9 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 
+import TempUnitToggleButton from './TempUnitToggleButton';
 import SearchBox from '../SearchBar/SearchBox';
 
 import { ctx } from '../Context/Provider.context';
@@ -15,39 +17,21 @@ function Navbar({}: Props) {
     <AppBar
       enableColorOnDark
       sx={(theme) => ({
-        height: '10vh',
-        backgroundColor: 'rgb(255, 72, 0)',
-        display: 'grid',
-        placeItems: 'center',
+        height: '7.5vh',
+        backgroundColor: 'rgb(41, 50, 65)',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
       })}
     >
-      {/* <Box
-        sx={(theme) => ({
-          position: 'relative',
-          width: '80%',
-          maxWidth: '600px',    
-          paddingInline: theme.spacing(4),
-          backgroundColor: 'rgba(255,255,255,0.8)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'text',
-          '&:hover': {
-            backgroundColor: 'rgba(255,255,255,0.8)',
-          },
-        })}
-        onClick={handleSearchBoxClick}
-      >
-        <SearchInput value={searchInputValue} setValue={setSearchInputValue} inputRef={inputRef} />
-        {isListShown && (
-          <ItemList
-            cities={fetchedCitiesList}
-            setCity={handleCitySelection}
-            listOffset={'3.25rem'}
-          />
-        )}
-      </Box> */}
-      <SearchBox containerStyles={{ height: '2.75em', borderRadius: 12 }} listOffset={'3rem'} />
+      <Box>Logo</Box>
+      <SearchBox
+        containerStyles={{ height: '2.5em', borderRadius: 12 }}
+        listOffset={'2.75rem'}
+        fontSize={'1.25rem'}
+      />
+      <TempUnitToggleButton />
     </AppBar>
   );
 }

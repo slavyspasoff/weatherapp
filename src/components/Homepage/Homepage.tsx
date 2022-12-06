@@ -37,6 +37,7 @@ function Homepage({}: Props) {
         containerStyles={{ height: '6.5vh', borderRadius: '1em' }}
         listOffset={'6.5vh'}
         isFocusedOnLoad
+        fontSize={'clamp(1.25rem,5vw,1.85rem)'}
       />
     </Box>
   );

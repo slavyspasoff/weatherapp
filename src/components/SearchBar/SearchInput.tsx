@@ -11,8 +11,9 @@ interface Props {
   setValue: Dispatch<SetStateAction<string>>;
   inputRef: MutableRefObject<HTMLInputElement | null>;
   isFocusedOnLoad: boolean;
+  fontSize: string;
 }
-function SearchInput({ value, setValue, inputRef, isFocusedOnLoad }: Props) {
+function SearchInput({ value, setValue, inputRef, isFocusedOnLoad, fontSize }: Props) {
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
     setValue(evt.target.value);
   };
@@ -20,7 +21,7 @@ function SearchInput({ value, setValue, inputRef, isFocusedOnLoad }: Props) {
   return (
     <InputBase
       sx={{
-        fontSize: 'clamp(1.25rem,5vw,1.85rem)',
+        fontSize,
         color: 'black',
         height: '100%',
         width: '80%',
