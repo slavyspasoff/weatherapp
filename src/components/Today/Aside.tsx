@@ -8,11 +8,13 @@ function Aside({}: Props) {
       <Box
          component='aside'
          sx={(theme) => ({
-            paddingInline: theme.spacing(1, 2),
+            [theme.breakpoints.up('lg')]: {
+               paddingInline: theme.spacing(1, 2),
+            },
          })}
       >
-         <CardBack></CardBack>
-         <CardBack></CardBack>
+         <CardBack sx={{ height: 300 }}></CardBack>
+         <CardBack sx={{ height: 300 }}></CardBack>
       </Box>
    );
 }

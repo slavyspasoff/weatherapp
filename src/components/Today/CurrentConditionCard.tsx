@@ -19,7 +19,7 @@ function CurrentConditionCard({}: Props) {
    const currentWeather = data.current.weather[0];
 
    return (
-      <CardBack sx={{ backgroundColor: 'rgba(129, 112, 161, 1)', height: 300 }}>
+      <CardBack sx={{ backgroundColor: 'rgba(129, 112, 161, 1)' }}>
          <section>
             <Box
                sx={(theme) => ({

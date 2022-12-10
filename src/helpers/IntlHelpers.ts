@@ -37,7 +37,7 @@ const formatTempUnit = (temp: number, unit: string) => {
 const formatWindSpeedUnit = (speed: number, unit: string) => {
    const windSpeedUnit = unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
 
-   new Intl.NumberFormat(locale, {
+   return new Intl.NumberFormat(locale, {
       style: 'unit',
       unit: windSpeedUnit,
    }).format(Math.round(speed));
@@ -45,8 +45,9 @@ const formatWindSpeedUnit = (speed: number, unit: string) => {
 
 const formatWindGustUnit = (speed: number, unit: string) => {
    const windGustUnit = unit === 'metric' ? 'meter-per-second' : 'mile-per-hour';
-
-   new Intl.NumberFormat(locale, { style: 'unit', unit: windGustUnit }).format(Math.round(speed));
+   return new Intl.NumberFormat(locale, { style: 'unit', unit: windGustUnit }).format(
+      Math.round(speed)
+   );
 };
 
 export {

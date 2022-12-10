@@ -16,7 +16,7 @@ function Today({}: Props) {
             display: 'grid',
             gridTemplateColumns: '1fr',
             [theme.breakpoints.up('lg')]: {
-               gridTemplateColumns: '1fr 400px',
+               gridTemplateColumns: 'minmax(600px,1fr) 400px',
             },
          })}
          component='section'
