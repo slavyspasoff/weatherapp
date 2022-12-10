@@ -1,22 +1,25 @@
+import { useContext } from 'react';
 import { Box, alpha, Typography } from '@mui/material';
-
-import CardBack from '../../styles/Card/CardBack.styles';
-import { type WeatherData, type CityData } from '../../types/global.types';
-import { getFullCountryName, getCurrentTime } from '../../helpers/IntlHelpers';
 import { NorthWest } from '@mui/icons-material';
 
-interface Props {
-   data: WeatherData | null;
-   city: CityData | null;
-}
+import CardBack from '../../styles/Card/CardBack.styles';
+import { ctx } from '../Context/Provider.context';
+import { getFullCountryName, getCurrentTime, formatTempUnit } from '../../helpers/IntlHelpers';
 
-function CurrentConditionCard({ data, city }: Props) {
-   //TODO: Add error
-   if (!city || !data) return <div>No data</div>;
-   const { name, country } = city;
+interface Props {}
+
+function CurrentConditionCard({}: Props) {
+   const { data, selectedCity, unit } = useContext(ctx);
+
+   //TODO: Add render error or navigate to index
+   if (!selectedCity || !data) return <div>No data</div>;
+
+   const { name, country } = selectedCity;
+   const { feels_like, temp } = data.current;
+   const currentWeather = data.current.weather[0];
 
    return (
-      <CardBack sx={{ backgroundColor: 'rgba(129, 112, 161, 1)' }}>
+      <CardBack sx={{ backgroundColor: 'rgba(129, 112, 161, 1)', height: 300 }}>
          <section>
             <Box
                sx={(theme) => ({
@@ -49,6 +52,64 @@ function CurrentConditionCard({ data, city }: Props) {
                >
                   ( {getCurrentTime()} )
                </Typography>
+            </Box>
+            <Box
+               sx={(theme) => ({
+                  padding: theme.spacing(1, 2),
+               })}
+            >
+               <Box
+                  sx={(theme) => ({
+                     display: 'flex',
+                     justifyContent: 'space-between',
+                     alignItems: 'center',
+                     paddingInline: theme.spacing(4),
+                  })}
+               >
+                  <Box
+                     sx={(theme) => ({
+                        display: 'flex',
+                        flexDirection: 'column',
+                     })}
+                  >
+                     <Typography
+                        component='span'
+                        sx={(theme) => ({
+                           color: 'white',
+                           fontSize: '4rem',
+                           fontWeight: theme.typography.fontWeightMedium,
+                        })}
+                     >
+                        {formatTempUnit(temp, unit)}
+                     </Typography>
+                     <Typography
+                        component='span'
+                        sx={(theme) => ({
+                           color: 'white',
+                           fontWeight: theme.typography.fontWeightMedium,
+                           textTransform: 'capitalize',
+                        })}
+                     >
+                        {currentWeather.description}
+                     </Typography>
+                     <Typography
+                        component='span'
+                        sx={(theme) => ({
+                           color: 'white',
+                           fontWeight: theme.typography.fontWeightMedium,
+                           textTransform: 'capitalize',
+                        })}
+                     >
+                        feels like: {formatTempUnit(feels_like, unit)}
+                     </Typography>
+                  </Box>
+
+                  <Box>
+                     <img
+                        src={`http://openweathermap.org/img/wn/${currentWeather.icon}@4x.png`}
+                     ></img>
+                  </Box>
+               </Box>
             </Box>
          </section>
       </CardBack>

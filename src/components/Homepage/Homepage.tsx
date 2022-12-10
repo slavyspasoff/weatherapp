@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 
 import SearchBox from '../SearchBar/SearchBox';
 
-import backgroundImage from '../../assets/images/homepage.background.jpeg';
+import backgroundImage from '../../assets/images/homepage.background.webp';
 
 interface Props {}
 

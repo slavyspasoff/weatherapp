@@ -6,7 +6,11 @@ const getFullCountryName = (countryCode: string) =>
       : countryCode;
 
 const getCurrentTime = () => {
-   let hour, minute, dayPeriod, timeZoneName;
+   let hour: string | undefined;
+   let minute: string | undefined;
+   let dayPeriod: string | undefined;
+   let timeZoneName: string | undefined;
+
    if (navigator.language) {
       const now = new Intl.DateTimeFormat([locale], {
          timeStyle: 'full',
@@ -18,8 +22,8 @@ const getCurrentTime = () => {
    }
    if (!hour || !minute) {
       const now = new Date();
-      hour = now.getHours();
-      minute = now.getMinutes();
+      hour = String(now.getHours());
+      minute = String(now.getMinutes());
    }
 
    return `${hour}:${minute} ${dayPeriod ? dayPeriod : ''} ${timeZoneName ? timeZoneName : ''}`;
