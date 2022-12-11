@@ -9,7 +9,7 @@ import {
 } from '../types/global.types';
 import fetchData from '../helpers/fetchData';
 
-/*Add lang prop to the url query to get the */
+/*TODO: Add lang prop to the url query to get the */
 
 interface Props {
    locationCoord: LocationCoord | null;
@@ -29,6 +29,7 @@ function useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity }: 
                   `${BASEURL}/data/2.5/onecall?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&units=${unit}&appid=${KEY}`
                );
                setData(fetchedWeatherData as WeatherData);
+               //TODO: Add description based on the locale language https://openweathermap.org/api/one-call-api#multi, search by ZIP CODE ETC. Make that s**t pop!
                const fetchedCityData = await fetchData(
                   `${BASEURL}/geo/1.0/reverse?lat=${locationCoord?.lat}&lon=${locationCoord?.lon}&limit=1&appid=${KEY}`
                );

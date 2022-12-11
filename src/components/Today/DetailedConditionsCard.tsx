@@ -85,6 +85,7 @@ function DetailedConditionsCard({}: Props) {
                   paddingInline: theme.spacing(2),
                })}
             >
+               {/*TODO: Add custom styled components, fix the CSS*/}
                <Detail>
                   <Typography variant='body1'>
                      <OpacityOutlined />

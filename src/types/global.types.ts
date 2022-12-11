@@ -7,7 +7,7 @@ export interface LocationCoord {
 
 export interface CityData {
    name: string;
-   local_names: { [key: string]: string };
+   local_names: { [K: string]: string };
    lat: number;
    lon: number;
    country: string;
@@ -21,75 +21,51 @@ export interface WeatherData {
    timezone_offset: number;
    current: Current;
    minutely: Minutely[];
-   hourly: Current[];
+   hourly: Hourly[];
    daily: Daily[];
+   alerts?: Alert[];
 }
 
-export interface Current {
+export interface Base {
    dt: number;
-   sunrise?: number;
-   sunset?: number;
-   temp: number;
-   feels_like: number;
+   sunrise: number;
+   sunset: number;
    pressure: number;
    humidity: number;
    dew_point: number;
-   uvi: number;
    clouds: number;
-   visibility: number;
    wind_speed: number;
    wind_deg: number;
    wind_gust?: number;
    weather: Weather[];
-   pop?: number;
+   uvi: number;
    rain?: Rain;
    snow?: Snow;
 }
 
-export interface Weather {
-   id: number;
-   main: Main;
-   description: Description;
-   icon: Icon;
+export interface Current extends Base {
+   temp: number;
+   feels_like: number;
+   visibility: number;
+}
+export interface Hourly extends Current {
+   pop: number;
 }
 
-//TODO: Add to the Description, Icon and Main enums
-export enum Description {
-   BrokenClouds = 'broken clouds',
-   ClearSky = 'clear sky',
-   FewClouds = 'few clouds',
-   OvercastClouds = 'overcast clouds',
-   ScatteredClouds = 'scattered clouds',
-}
-
-export interface Icon {
-   [K: string]: string;
-}
-
-export interface Main {
-   [K: string]: string;
-}
-
-export interface Daily {
-   dt: number;
-   sunrise: number;
-   sunset: number;
+export interface Daily extends Base {
    moonrise: number;
    moonset: number;
    moon_phase: number;
    temp: Temp;
    feels_like: FeelsLike;
-   pressure: number;
-   humidity: number;
-   dew_point: number;
-   wind_speed: number;
-   wind_deg: number;
-   wind_gust: number;
-   weather: Weather[];
-   clouds: number;
    pop: number;
-   uvi: number;
-   rain?: Rain;
+}
+
+export interface Weather {
+   id: number;
+   main: string;
+   description: string;
+   icon: string;
 }
 
 export interface FeelsLike {
@@ -113,10 +89,14 @@ export interface Minutely {
    precipitation: number;
 }
 
-export interface Rain {
-   [K: string]: number;
+export interface Alert {
+   sender_name: string;
+   event: string;
+   start: number;
+   end: number;
+   description: string;
+   tags: string[];
 }
 
-export interface Snow {
-   [K: string]: number;
-}
+export type Rain = { '1h': number } | number;
+export type Snow = { '1h': number } | number;
