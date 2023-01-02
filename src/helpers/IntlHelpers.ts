@@ -29,6 +29,20 @@ const getCurrentTime = () => {
    return `${hour}:${minute} ${dayPeriod ? dayPeriod : ''} ${timeZoneName ? timeZoneName : ''}`;
 };
 
+const formatTime = (dt: number) => {
+   let hour: string;
+   let dayPeriod: string | undefined;
+
+   const parts = new Intl.DateTimeFormat(['de-DE'], {
+      hour: 'numeric',
+   }).formatToParts(new Date(dt * 1000));
+
+   hour = parts.find(({ type }) => type === 'hour')?.value as string;
+   dayPeriod = parts.find(({ type }) => type === 'dayPeriod')?.value;
+
+   return `${hour}:00 ${dayPeriod ? dayPeriod : ''}`;
+};
+
 const formatTempUnit = (temp: number, unit: string) => {
    const tempUnit = unit === 'metric' ? 'celsius' : 'fahrenheit';
    return new Intl.NumberFormat(locale, { style: 'unit', unit: tempUnit }).format(Math.round(temp));
@@ -56,4 +70,5 @@ export {
    formatTempUnit,
    formatWindSpeedUnit,
    formatWindGustUnit,
+   formatTime,
 };
