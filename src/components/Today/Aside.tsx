@@ -11,14 +11,22 @@ function Aside({}: Props) {
    const { data } = useContext(ctx);
    if (!data || !data.alerts) {
       return (
-         <CardBack>
-            <Typography>No alerts!</Typography>
+         <CardBack
+            sx={(theme) => ({
+               height: '75px',
+               display: 'grid',
+               placeItems: 'center',
+               padding: theme.spacing(2),
+            })}
+         >
+            <Typography variant='h3' sx={{ fontSize: '1.5rem' }}>
+               No weather alerts
+            </Typography>
          </CardBack>
       );
    }
 
    const alerts = data.alerts.map((alert) => {
-      console.log(alert.event);
       return <AlertCard {...alert} key={alert.description} />;
    });
    return (
