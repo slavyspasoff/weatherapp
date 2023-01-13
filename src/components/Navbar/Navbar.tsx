@@ -1,7 +1,5 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import { useContext } from 'react';
+import { AppBar, Box, Button, useScrollTrigger } from '@mui/material';
 
 import TempUnitToggleButton from './TempUnitToggleButton';
 import SearchBox from '../SearchBar/SearchBox';
@@ -10,31 +8,45 @@ import { ctx } from '../Context/Provider.context';
 
 interface Props {}
 function Navbar({}: Props) {
-  const { toggleTheme } = useContext(ctx);
-  const navigate = useNavigate();
+   const { paletteMode, toggleTheme } = useContext(ctx);
 
-  return (
-    <AppBar
-      enableColorOnDark
-      sx={(theme) => ({
-        height: '7.5vh',
-        backgroundColor: 'rgb(41, 50, 65)',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        gap: theme.spacing(2),
-        paddingInline: theme.spacing(2),
-      })}
-    >
-      <Box>Logo</Box>
-      <SearchBox
-        containerStyles={{ height: '2.5em', borderRadius: 12 }}
-        listOffset={'2.75rem'}
-        fontSize={'1.25rem'}
-      />
-      <TempUnitToggleButton />
-    </AppBar>
-  );
+   const trigger = useScrollTrigger({
+      disableHysteresis: true,
+      threshold: 0,
+   });
+
+   return (
+      <AppBar
+         enableColorOnDark
+         elevation={trigger ? 4 : 0}
+         sx={(theme) => ({
+            height: '7.5vh',
+            backgroundColor: theme.palette.background.default,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+            gap: theme.spacing(2),
+            paddingInline: theme.spacing(2),
+         })}
+      >
+         <Box>Logo</Box>
+         <SearchBox
+            containerStyles={{ height: '2.5em', borderRadius: 12 }}
+            listOffset={'2.75rem'}
+            fontSize={'1.25rem'}
+         />
+         <Box>
+            <TempUnitToggleButton />
+            <Button
+               onClick={() => {
+                  toggleTheme();
+               }}
+            >
+               {paletteMode}
+            </Button>
+         </Box>
+      </AppBar>
+   );
 }
 export default Navbar;

@@ -19,11 +19,11 @@ function CurrentConditionCard({}: Props) {
    const currentWeather = data.current.weather[0];
 
    return (
-      <CardBack sx={{ backgroundColor: 'rgba(129, 112, 161, 1)' }}>
+      <CardBack sx={{}}>
          <section>
             <Box
                sx={(theme) => ({
-                  backgroundColor: alpha(theme.palette.common.black, 0.5),
+                  backgroundColor: alpha(theme.palette.background.default, 0.4),
                   padding: theme.spacing(1.5, 2.5),
                   display: 'flex',
                   justifyContent: 'flex-start',
@@ -36,7 +36,6 @@ function CurrentConditionCard({}: Props) {
                   sx={(theme) => ({
                      fontSize: '1.25rem',
                      fontWeight: theme.typography.fontWeightBold,
-                     color: 'white',
                   })}
                >
                   {name}
@@ -47,7 +46,6 @@ function CurrentConditionCard({}: Props) {
                   component='span'
                   sx={(theme) => ({
                      fontSize: '1rem',
-                     color: 'white',
                   })}
                >
                   ( {getCurrentTime()} )
@@ -72,10 +70,10 @@ function CurrentConditionCard({}: Props) {
                         flexDirection: 'column',
                      })}
                   >
+                     {/**TODO: Make a styled component, remove repetition */}
                      <Typography
                         component='span'
                         sx={(theme) => ({
-                           color: 'white',
                            fontSize: '4rem',
                            fontWeight: theme.typography.fontWeightMedium,
                         })}
@@ -85,7 +83,6 @@ function CurrentConditionCard({}: Props) {
                      <Typography
                         component='span'
                         sx={(theme) => ({
-                           color: 'white',
                            fontWeight: theme.typography.fontWeightMedium,
                            textTransform: 'capitalize',
                         })}
@@ -95,7 +92,6 @@ function CurrentConditionCard({}: Props) {
                      <Typography
                         component='span'
                         sx={(theme) => ({
-                           color: 'white',
                            fontWeight: theme.typography.fontWeightMedium,
                            textTransform: 'capitalize',
                         })}

@@ -21,7 +21,14 @@ function AlertCard({ description, start, end, sender_name, event, tags }: Props)
             </Typography>
          </Box>
          <Box>
-            <Typography>Start date: {formatDate(end)}</Typography>
+            <Typography
+               sx={(theme) => {
+                  console.log(theme);
+                  return {};
+               }}
+            >
+               Start date: {formatDate(end)}
+            </Typography>
             <Typography>End date: {formatDate(end)}</Typography>
             {sender_name && <Typography>Sender: {sender_name}</Typography>}
             <Typography>Event: {event}</Typography>

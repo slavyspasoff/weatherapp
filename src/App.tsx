@@ -13,21 +13,20 @@ import Today from './components/Today/Today';
 interface Props {}
 
 function App({}: Props) {
-  const { setLocationCoord, locationCoord, unit, setData, setSelectedCity, paletteMode } =
-    useContext(ctx);
-  useBrowserGeolocation({ setLocationCoord });
-  useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity });
-  return (
-    <ThemeProvider theme={theme(paletteMode)}>
-      <CssBaseline />
-
-      <Routes>
-        <Route path='/' element={<Homepage />} />
-        <Route path='weather' element={<Weather />}>
-          <Route path='today' element={<Today />} />
-        </Route>
-      </Routes>
-    </ThemeProvider>
-  );
+   const { setLocationCoord, locationCoord, unit, setData, setSelectedCity, paletteMode } =
+      useContext(ctx);
+   useBrowserGeolocation({ setLocationCoord });
+   useFetchWeatherData({ locationCoord, unit, setData, setSelectedCity });
+   return (
+      <ThemeProvider theme={theme(paletteMode)}>
+         <CssBaseline />
+         <Routes>
+            <Route path='/' element={<Homepage />} />
+            <Route path='weather' element={<Weather />}>
+               <Route path='today' element={<Today />} />
+            </Route>
+         </Routes>
+      </ThemeProvider>
+   );
 }
 export default App;
