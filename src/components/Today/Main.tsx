@@ -1,8 +1,9 @@
 import Box from '@mui/material/Box';
 
-import CurrentConditionCard from './CurrentConditionCard';
-import DetailedConditionsCard from './DetailedConditionsCard';
-import ForecastCard from './ForecastCard';
+import CurrentConditionCard from './CurrentConditions/CurrentConditionsCard';
+import DetailedConditionsCard from './DetailedConditions/DetailedConditionsCard';
+import ForecastCard from './ForecastDaily/ForecastCard';
+
 interface Props {}
 function Main({}: Props) {
    return (

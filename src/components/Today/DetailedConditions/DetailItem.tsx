@@ -25,11 +25,10 @@ function Detail({ Icon, description, value, WindDirection }: Props) {
             },
          })}
       >
-         <Icon sx={{ flexBasis: '20%' }} />
+         <Icon sx={(theme) => ({ flexBasis: '20%' })} />
          <Typography sx={{ flexBasis: '40%', pl: 2 }}>{description}</Typography>
          <Box sx={{ flexBasis: '40%', textAlign: 'center' }}>
-            {WindDirection && <WindDirection sx={{ fontSize: 'inherit' }} />}
-            {value}
+            {WindDirection && <WindDirection sx={{ fontSize: 'inherit' }} />} {value}
          </Box>
       </Box>
    );

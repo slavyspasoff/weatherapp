@@ -1,11 +1,11 @@
-import { useContext } from 'react';
 import { Box, Typography } from '@mui/material';
+import { useContext } from 'react';
 
-import ForecastCardItem from './ForecastCardItem';
-import CardBack from '../../styles/Card/CardBack.styles';
+import CardBack from '../../../styles/Card/CardBack.styles';
+import ForecastCardItem from './ForecastItem';
 
-import { ctx } from '../Context/Provider.context';
-import { formatTempUnit, formatTime } from '../../helpers/IntlHelpers';
+import { formatTempUnit, formatTime } from '../../../helpers/IntlHelpers';
+import { ctx } from '../../Context/Provider.context';
 
 interface Props {
    title: string;

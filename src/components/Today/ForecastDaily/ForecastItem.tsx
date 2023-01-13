@@ -1,8 +1,10 @@
-import { useContext } from 'react';
-import { Box, Typography, alpha } from '@mui/material';
 import { Opacity } from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
+import { useContext } from 'react';
 
-import { type Snow, type Rain } from '../../types/global.types';
+import { type Rain, type Snow } from '../../../types/global.types';
+import { ctx } from '../../Context/Provider.context';
+
 interface Props {
    time: string;
    temp: string;
@@ -12,7 +14,6 @@ interface Props {
    rain?: Rain;
    snow?: Snow;
 }
-import { ctx } from '../Context/Provider.context';
 
 function ForecastCardItem({ time, temp, description, icon, pop, rain, snow }: Props) {
    const { paletteMode } = useContext(ctx);

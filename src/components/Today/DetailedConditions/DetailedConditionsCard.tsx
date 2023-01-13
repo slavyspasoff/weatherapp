@@ -1,19 +1,23 @@
-import { useContext } from 'react';
-import { Box, Typography } from '@mui/material';
 import {
-   OpacityOutlined,
    Air,
    CompressOutlined,
-   WbSunnyOutlined,
-   VisibilitySharp,
    InvertColorsSharp,
+   OpacityOutlined,
+   VisibilitySharp,
+   WbSunnyOutlined,
 } from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
+import { useContext } from 'react';
 
-import { ctx } from '../Context/Provider.context';
-import CardBack from '../../styles/Card/CardBack.styles';
-import Detail from './Detail';
-import { getFullCountryName, formatWindSpeedUnit, formatTempUnit } from '../../helpers/IntlHelpers';
-import getWindDirection, { getWindDirectionIcon } from '../../helpers/getWindDirection';
+import getWindDirection, { getWindDirectionIcon } from '../../../helpers/getWindDirection';
+import {
+   formatTempUnit,
+   formatWindSpeedUnit,
+   getFullCountryName,
+} from '../../../helpers/IntlHelpers';
+import CardBack from '../../../styles/Card/CardBack.styles';
+import { ctx } from '../../Context/Provider.context';
+import Detail from './DetailItem';
 
 interface Props {}
 

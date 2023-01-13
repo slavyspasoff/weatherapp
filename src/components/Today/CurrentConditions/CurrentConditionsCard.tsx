@@ -1,10 +1,9 @@
+import { alpha, Box, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { Box, alpha, Typography } from '@mui/material';
-import { NorthWest } from '@mui/icons-material';
 
-import CardBack from '../../styles/Card/CardBack.styles';
-import { ctx } from '../Context/Provider.context';
-import { getFullCountryName, getCurrentTime, formatTempUnit } from '../../helpers/IntlHelpers';
+import { formatTempUnit, getCurrentTime, getFullCountryName } from '../../../helpers/IntlHelpers';
+import CardBack from '../../../styles/Card/CardBack.styles';
+import { ctx } from '../../Context/Provider.context';
 
 interface Props {}
 
