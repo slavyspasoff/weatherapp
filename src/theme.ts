@@ -8,16 +8,18 @@ declare module '@mui/material/styles' {
    }
 }
 // rgba(24, 27, 40, 1);
-//252, 247, 255
-//196, 202, 208
-//135, 140, 143
+//rgba(252, 247, 255,1)
+//rgba(196, 202, 208,1)
+//rgba(135, 140, 143,1)
+//rgba(99, 118, 141,1)
+//rgba(228,230,195,1)
 const theme = (paletteMode: PaletteMode) =>
    createTheme({
       palette: {
          mode: paletteMode,
          background: {
-            card: paletteMode === 'dark' ? 'rgb(24,27,40)' : 'rgba(242,240,243,1)',
-            default: paletteMode === 'dark' ? 'rgb(77, 80, 97)' : 'rgba(255,255,255,1)',
+            card: paletteMode === 'dark' ? 'rgb(24,27,40)' : 'rgba(173, 181, 189,1)',
+            default: paletteMode === 'dark' ? 'rgb(99, 118, 141)' : 'rgba(237, 242, 244,1)',
          },
       },
       components: {

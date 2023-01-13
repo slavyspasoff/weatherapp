@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { useContext } from 'react';
+import { Box, Typography, alpha } from '@mui/material';
 import { Opacity } from '@mui/icons-material';
 
 import { type Snow, type Rain } from '../../types/global.types';
@@ -11,7 +12,10 @@ interface Props {
    rain?: Rain;
    snow?: Snow;
 }
+import { ctx } from '../Context/Provider.context';
+
 function ForecastCardItem({ time, temp, description, icon, pop, rain, snow }: Props) {
+   const { paletteMode } = useContext(ctx);
    if (snow && typeof snow !== 'number') {
       snow = snow['1h'];
    }
@@ -35,10 +39,10 @@ function ForecastCardItem({ time, temp, description, icon, pop, rain, snow }: Pr
          </Box>
 
          <Box
-            sx={{
-               backgroundColor: 'rgba(0,0,0,0.05)',
-               // borderRadius: '5%',
-            }}
+         // sx={(theme) => ({
+         //    backgroundColor:
+         //       paletteMode === 'dark' ? 'transparent' : alpha(theme.palette.common.black, 0.1),
+         // })}
          >
             {/*TODO: Add alt tag on all images.*/}
             <img

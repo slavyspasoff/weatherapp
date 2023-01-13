@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AppBar, Box, Button, useScrollTrigger } from '@mui/material';
+import { AppBar, Box, Button } from '@mui/material';
 
 import TempUnitToggleButton from './TempUnitToggleButton';
 import SearchBox from '../SearchBar/SearchBox';
@@ -10,15 +10,9 @@ interface Props {}
 function Navbar({}: Props) {
    const { paletteMode, toggleTheme } = useContext(ctx);
 
-   const trigger = useScrollTrigger({
-      disableHysteresis: true,
-      threshold: 0,
-   });
-
    return (
       <AppBar
          enableColorOnDark
-         elevation={trigger ? 4 : 0}
          sx={(theme) => ({
             height: '7.5vh',
             backgroundColor: theme.palette.background.default,

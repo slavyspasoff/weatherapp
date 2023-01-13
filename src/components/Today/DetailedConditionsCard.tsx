@@ -1,14 +1,6 @@
 import { useContext } from 'react';
-import { Box, Typography, styled, alpha } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import {
-   North,
-   NorthEast,
-   East,
-   SouthEast,
-   South,
-   SouthWest,
-   West,
-   NorthWest,
    OpacityOutlined,
    Air,
    CompressOutlined,
@@ -19,40 +11,11 @@ import {
 
 import { ctx } from '../Context/Provider.context';
 import CardBack from '../../styles/Card/CardBack.styles';
+import Detail from './Detail';
 import { getFullCountryName, formatWindSpeedUnit, formatTempUnit } from '../../helpers/IntlHelpers';
-import getWindDirection from '../../helpers/getWindDirection';
+import getWindDirection, { getWindDirectionIcon } from '../../helpers/getWindDirection';
 
 interface Props {}
-
-const Detail = styled(Box)(({ theme }) => ({
-   padding: theme.spacing(1, 2),
-   borderBottom: `1px solid ${alpha('rgb(0,0,0)', 0.2)}`,
-}));
-
-const getWindDirectionIcon = (
-   direction: string,
-   size: 'small' | 'inherit' | 'medium' | 'large'
-) => {
-   if (direction === 'North') return <North fontSize={size} />;
-   if (direction === 'NorthEast') return <NorthEast fontSize={size} />;
-   if (direction === 'East') return <East fontSize={size} />;
-   if (direction === 'SouthEast') return <SouthEast fontSize={size} />;
-   if (direction === 'South') return <South fontSize={size} />;
-   if (direction === 'SouthWest') return <SouthWest fontSize={size} />;
-   if (direction === 'West') return <West fontSize={size} />;
-   if (direction === 'NorthWest') return <NorthWest fontSize={size} />;
-};
-
-const getWindDirectionText = (direction: string) => {
-   if (direction === 'North') return 'N';
-   if (direction === 'NorthEast') return 'N/E';
-   if (direction === 'East') return 'E';
-   if (direction === 'SouthEast') return 'S/E';
-   if (direction === 'South') return 'S';
-   if (direction === 'SouthWest') return 'SW';
-   if (direction === 'West') return 'W';
-   if (direction === 'NorthWest') return 'NW';
-};
 
 function DetailedConditionsCard({}: Props) {
    const { data, selectedCity, unit } = useContext(ctx);
@@ -67,7 +30,7 @@ function DetailedConditionsCard({}: Props) {
    const windDirection = getWindDirection(wind_deg);
 
    return (
-      <CardBack sx={(theme) => ({})}>
+      <CardBack>
          <Box component='section'>
             <Box sx={(theme) => ({ padding: theme.spacing(2, 3) })}>
                <Typography variant='h6' component={'h2'}>
@@ -85,48 +48,23 @@ function DetailedConditionsCard({}: Props) {
                   paddingInline: theme.spacing(2),
                })}
             >
-               {/*TODO: Add custom styled components, fix the CSS*/}
-               <Detail>
-                  <Typography variant='body1'>
-                     <OpacityOutlined />
-                     Humidity
-                     {humidity}&#37;
-                  </Typography>
-               </Detail>
-               <Detail>
-                  <Typography variant='body1'>
-                     <CompressOutlined /> Pressure
-                     {pressure} hPa
-                  </Typography>
-               </Detail>
-               <Detail>
-                  <Typography variant='body1'>
-                     <Air /> Wind
-                     {getWindDirectionIcon(windDirection, 'inherit')}
-                     {formatWindSpeedUnit(wind_speed, unit)}{' '}
-                  </Typography>
-               </Detail>
-               <Detail>
-                  <Typography variant='body1'>
-                     <WbSunnyOutlined />
-                     UV Index
-                     {uvi} of 10
-                  </Typography>
-               </Detail>
-               <Detail>
-                  <Typography variant='body1'>
-                     <InvertColorsSharp />
-                     Dew Point
-                     {formatTempUnit(dew_point, unit)}
-                  </Typography>
-               </Detail>
-               <Detail>
-                  <Typography variant='body1'>
-                     <VisibilitySharp />
-                     Visibility
-                     {visibility}
-                  </Typography>
-               </Detail>
+               {/*TODO: Add custom styled components, fix the CSS  !DONE*/}
+               <Detail Icon={OpacityOutlined} description={'Humidity'} value={`${humidity}%`} />
+               <Detail Icon={CompressOutlined} description={'Pressure'} value={`${pressure} hPa`} />
+               <Detail
+                  Icon={Air}
+                  description={'Wind'}
+                  value={`${formatWindSpeedUnit(wind_speed, unit)}`}
+                  WindDirection={getWindDirectionIcon(windDirection)}
+               />
+
+               <Detail Icon={WbSunnyOutlined} description={'UV Index'} value={`${uvi} of 10`} />
+               <Detail
+                  Icon={InvertColorsSharp}
+                  description={'Dew Point'}
+                  value={`${formatTempUnit(dew_point, unit)}`}
+               />
+               <Detail Icon={VisibilitySharp} description={'Visibility'} value={`${visibility}`} />
             </Box>
          </Box>
       </CardBack>

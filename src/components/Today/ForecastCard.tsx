@@ -23,7 +23,7 @@ function ForecastCard({ title }: Props) {
                padding: theme.spacing(2, 3),
             })}
          >
-            <Typography>{title || `Daily weather forecast`}</Typography>
+            <Typography>{title}</Typography>
          </Box>
          <Box
             sx={(theme) => ({

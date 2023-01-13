@@ -16,7 +16,8 @@ function Main({}: Props) {
       >
          <CurrentConditionCard />
          <DetailedConditionsCard />
-         <ForecastCard />
+         {/*TODO: Add title section for the card and remove duplication */}
+         <ForecastCard title={'Daily weather forecast'} />
       </Box>
    );
 }
