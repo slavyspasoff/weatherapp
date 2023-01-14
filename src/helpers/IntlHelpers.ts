@@ -5,7 +5,7 @@ const getFullCountryName = (countryCode: string) =>
       ? new Intl.DisplayNames([locale], { type: 'region' }).of(countryCode)
       : countryCode;
 
-const getCurrentTime = () => {
+const getCurrentTime = (v: 'full' | 'long') => {
    let hour: string | undefined;
    let minute: string | undefined;
    let dayPeriod: string | undefined;
@@ -13,7 +13,7 @@ const getCurrentTime = () => {
 
    if (navigator.language) {
       const now = new Intl.DateTimeFormat([locale], {
-         timeStyle: 'full',
+         timeStyle: v,
       }).formatToParts(new Date());
       hour = now.find(({ type }) => type === 'hour')?.value;
       minute = now.find(({ type }) => type === 'minute')?.value;

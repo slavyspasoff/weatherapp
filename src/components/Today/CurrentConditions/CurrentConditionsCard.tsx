@@ -1,5 +1,5 @@
-import { alpha, Box, Typography } from '@mui/material';
 import { useContext } from 'react';
+import { alpha, Box, Typography, useMediaQuery } from '@mui/material';
 
 import { formatTempUnit, getCurrentTime, getFullCountryName } from '../../../helpers/IntlHelpers';
 import CardBack from '../../../styles/Card/CardBack.styles';
@@ -9,10 +9,9 @@ interface Props {}
 
 function CurrentConditionCard({}: Props) {
    const { data, selectedCity, unit } = useContext(ctx);
-
    //TODO: Add render error or navigate to index
    if (!selectedCity || !data) return <div>No data</div>;
-
+   const isScreenSmall = useMediaQuery('(max-width:600px)');
    const { name, country } = selectedCity;
    const { feels_like, temp } = data.current;
    const currentWeather = data.current.weather[0];
@@ -47,11 +46,11 @@ function CurrentConditionCard({}: Props) {
                sx={(theme) => ({
                   fontSize: '1rem',
 
-                  display: 'none',
+                  // display: 'none',
                   [theme.breakpoints.up('sm')]: { display: 'inline' },
                })}
             >
-               ( {getCurrentTime()} )
+               ( {getCurrentTime(isScreenSmall ? 'long' : 'full')} )
             </Typography>
          </Box>
          <Box
