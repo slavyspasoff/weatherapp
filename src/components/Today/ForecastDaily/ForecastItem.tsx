@@ -1,9 +1,7 @@
 import { Opacity } from '@mui/icons-material';
-import { Box, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { alpha, Box, styled, Typography } from '@mui/material';
 
 import { type Rain, type Snow } from '../../../types/global.types';
-import { ctx } from '../../Context/Provider.context';
 
 interface Props {
    time: string;
@@ -13,10 +11,14 @@ interface Props {
    pop: number;
    rain?: Rain;
    snow?: Snow;
+   isLast: boolean;
 }
 
-function ForecastCardItem({ time, temp, description, icon, pop, rain, snow }: Props) {
-   const { paletteMode } = useContext(ctx);
+const Image = styled('img')(({ theme }) => ({
+   width: '100%',
+}));
+
+function ForecastCardItem({ time, temp, description, icon, pop, rain, snow, isLast }: Props) {
    if (snow && typeof snow !== 'number') {
       snow = snow['1h'];
    }
@@ -30,27 +32,32 @@ function ForecastCardItem({ time, temp, description, icon, pop, rain, snow }: Pr
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            position: 'relative',
+            '&::after': {
+               content: '""',
+               position: 'absolute',
+               height: '70%',
+               right: 0,
+               top: '12.5%',
+               borderImage: `linear-gradient(180deg,${theme.palette.divider}00 0,${theme.palette.divider} 25%,${theme.palette.divider} 70%,${theme.palette.divider}00 85%,${theme.palette.divider}00) 1 100%`,
+               borderRight: !isLast
+                  ? `1px solid ${alpha(theme.palette.text.primary, 0.15)}`
+                  : undefined,
+            },
          })}
       >
          <Box>
             <Typography>{time}</Typography>
          </Box>
          <Box>
-            <Typography>{temp}</Typography>
+            <Typography
+               sx={(theme) => ({ fontSize: '1.25rem', color: theme.palette.warning.main })}
+            >
+               {temp}
+            </Typography>
          </Box>
-
-         <Box
-         // sx={(theme) => ({
-         //    backgroundColor:
-         //       paletteMode === 'dark' ? 'transparent' : alpha(theme.palette.common.black, 0.1),
-         // })}
-         >
-            {/*TODO: Add alt tag on all images.*/}
-            <img
-               src={`http://openweathermap.org/img/wn/${icon}@4x.png`}
-               alt={description}
-               style={{ width: '100%' }}
-            />
+         <Box>
+            <Image src={`http://openweathermap.org/img/wn/${icon}@4x.png`} alt={description} />
          </Box>
          <Box
             sx={{
@@ -61,24 +68,6 @@ function ForecastCardItem({ time, temp, description, icon, pop, rain, snow }: Pr
             <Opacity fontSize='inherit' />
             <Typography>{Math.round(pop * 100)} &#37;</Typography>
          </Box>
-         {/* <Box
-            sx={{
-               display: 'flex',
-               gap: '10px',
-            }}
-         >
-            <Opacity fontSize='inherit' />
-            <Typography>{rain ? `${rain} mm` : '--'}</Typography>
-         </Box>
-         <Box
-            sx={{
-               display: 'flex',
-               gap: '10px',
-            }}
-         >
-            <AcUnit fontSize='inherit'></AcUnit>
-            <Typography>{snow ? `${snow} mm` : '--'}</Typography>
-         </Box> */}
       </Box>
    );
 }

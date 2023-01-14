@@ -29,7 +29,7 @@ function Navbar({}: Props) {
             paddingInline: theme.spacing(2),
          })}
       >
-         <Logo src={logo} />
+         <Logo src={logo} alt='logo' />
          <SearchBox
             containerStyles={{ height: '2.5em', borderRadius: 12 }}
             listOffset={'2.75rem'}

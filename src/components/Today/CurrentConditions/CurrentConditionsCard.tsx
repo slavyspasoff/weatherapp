@@ -41,17 +41,7 @@ function CurrentConditionCard({}: Props) {
                   {getFullCountryName(country)}{' '}
                </Box>
             </Typography>
-            <Typography
-               component='span'
-               sx={(theme) => ({
-                  fontSize: '1rem',
-
-                  // display: 'none',
-                  [theme.breakpoints.up('sm')]: { display: 'inline' },
-               })}
-            >
-               ( {getCurrentTime(isScreenSmall ? 'long' : 'full')} )
-            </Typography>
+            <Box component='span'>( {getCurrentTime(isScreenSmall ? 'long' : 'full')} )</Box>
          </Box>
          <Box
             sx={(theme) => ({

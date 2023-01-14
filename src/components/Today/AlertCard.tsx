@@ -15,10 +15,13 @@ interface Props extends Alert {}
 
 function AlertCard({ description, start, end, sender_name, event, tags }: Props) {
    return (
-      <CardBack sx={(theme) => ({ padding: theme.spacing(2) })}>
+      <CardBack sx={(theme) => ({ padding: theme.spacing(2, 3) })}>
          <Box>
             <Typography
-               sx={(theme) => ({ fontSize: '1.5rem', lineHeight: '3rem' })}
+               sx={(theme) => ({
+                  fontSize: '1.5rem',
+                  lineHeight: '3rem',
+               })}
                component={'h3'}
             >
                <ReportGmailerrorred /> Alert
