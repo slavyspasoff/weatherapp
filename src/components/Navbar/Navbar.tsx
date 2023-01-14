@@ -1,15 +1,20 @@
-import { useContext } from 'react';
-import { AppBar, Box, Button } from '@mui/material';
+import { type MouseEventHandler, useContext } from 'react';
+import { AppBar, Box, Button, SvgIcon } from '@mui/material';
+import { LightModeOutlined, DarkModeOutlined } from '@mui/icons-material';
 
 import TempUnitToggleButton from './TempUnitToggleButton';
 import SearchBox from '../SearchBar/SearchBox';
+import Logo from './Logo';
 
 import { ctx } from '../Context/Provider.context';
+import logo from '../../assets/images/logo.svg';
 
 interface Props {}
 function Navbar({}: Props) {
    const { paletteMode, toggleTheme } = useContext(ctx);
-
+   const handleClick: MouseEventHandler = (evt) => {
+      toggleTheme();
+   };
    return (
       <AppBar
          enableColorOnDark
@@ -24,20 +29,16 @@ function Navbar({}: Props) {
             paddingInline: theme.spacing(2),
          })}
       >
-         <Box>Logo</Box>
+         <Logo src={logo} />
          <SearchBox
             containerStyles={{ height: '2.5em', borderRadius: 12 }}
             listOffset={'2.75rem'}
             fontSize={'1.25rem'}
          />
-         <Box>
+         <Box sx={(theme) => ({ display: 'flex', gap: 1 })}>
             <TempUnitToggleButton />
-            <Button
-               onClick={() => {
-                  toggleTheme();
-               }}
-            >
-               {paletteMode}
+            <Button onClick={handleClick} disableRipple>
+               {paletteMode === 'light' ? <DarkModeOutlined /> : <LightModeOutlined />}
             </Button>
          </Box>
       </AppBar>

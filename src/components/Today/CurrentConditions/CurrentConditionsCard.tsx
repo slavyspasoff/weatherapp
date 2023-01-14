@@ -18,95 +18,105 @@ function CurrentConditionCard({}: Props) {
    const currentWeather = data.current.weather[0];
 
    return (
-      <CardBack sx={{}}>
-         <section>
-            <Box
+      <CardBack component='section'>
+         <Box
+            sx={(theme) => ({
+               backgroundColor: alpha(theme.palette.background.default, 0.4),
+               padding: theme.spacing(1.5, 2.5),
+               display: 'flex',
+               justifyContent: 'flex-start',
+               alignItems: 'flex-end',
+               gap: 1,
+            })}
+         >
+            <Typography
+               component='h1'
                sx={(theme) => ({
-                  backgroundColor: alpha(theme.palette.background.default, 0.4),
-                  padding: theme.spacing(1.5, 2.5),
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-end',
-                  gap: 1,
+                  fontSize: '1.25rem',
+                  fontWeight: theme.typography.fontWeightBold,
                })}
             >
-               <Typography
-                  component='h1'
-                  sx={(theme) => ({
-                     fontSize: '1.25rem',
-                     fontWeight: theme.typography.fontWeightBold,
-                  })}
-               >
-                  {name}
+               {name}
+               <Box component='span'>
                   {', '}
                   {getFullCountryName(country)}{' '}
-               </Typography>
-               <Typography
-                  component='span'
-                  sx={(theme) => ({
-                     fontSize: '1rem',
-                  })}
-               >
-                  ( {getCurrentTime()} )
-               </Typography>
-            </Box>
+               </Box>
+            </Typography>
+            <Typography
+               component='span'
+               sx={(theme) => ({
+                  fontSize: '1rem',
+
+                  display: 'none',
+                  [theme.breakpoints.up('sm')]: { display: 'inline' },
+               })}
+            >
+               ( {getCurrentTime()} )
+            </Typography>
+         </Box>
+         <Box
+            sx={(theme) => ({
+               padding: theme.spacing(1, 2),
+            })}
+         >
             <Box
                sx={(theme) => ({
-                  padding: theme.spacing(1, 2),
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingInline: theme.spacing(4),
                })}
             >
                <Box
                   sx={(theme) => ({
                      display: 'flex',
-                     justifyContent: 'space-between',
-                     alignItems: 'center',
-                     paddingInline: theme.spacing(4),
+                     flexDirection: 'column',
                   })}
                >
-                  <Box
+                  {/**TODO: Make a component, remove repetition */}
+                  <Typography
+                     component='span'
                      sx={(theme) => ({
-                        display: 'flex',
-                        flexDirection: 'column',
+                        fontSize: 'clamp(2.5rem,5vw,4rem)',
+                        fontWeight: theme.typography.fontWeightMedium,
                      })}
                   >
-                     {/**TODO: Make a styled component, remove repetition */}
-                     <Typography
-                        component='span'
-                        sx={(theme) => ({
-                           fontSize: '4rem',
-                           fontWeight: theme.typography.fontWeightMedium,
-                        })}
-                     >
-                        {formatTempUnit(temp, unit)}
-                     </Typography>
-                     <Typography
-                        component='span'
-                        sx={(theme) => ({
-                           fontWeight: theme.typography.fontWeightMedium,
-                           textTransform: 'capitalize',
-                        })}
-                     >
-                        {currentWeather.description}
-                     </Typography>
-                     <Typography
-                        component='span'
-                        sx={(theme) => ({
-                           fontWeight: theme.typography.fontWeightMedium,
-                           textTransform: 'capitalize',
-                        })}
-                     >
-                        feels like: {formatTempUnit(feels_like, unit)}
-                     </Typography>
-                  </Box>
-
-                  <Box>
-                     <img
-                        src={`http://openweathermap.org/img/wn/${currentWeather.icon}@4x.png`}
-                     ></img>
-                  </Box>
+                     {formatTempUnit(temp, unit)}
+                  </Typography>
+                  <Typography
+                     component='span'
+                     sx={(theme) => ({
+                        fontWeight: theme.typography.fontWeightMedium,
+                        textTransform: 'capitalize',
+                     })}
+                  >
+                     {currentWeather.description}
+                  </Typography>
+                  <Typography
+                     component='span'
+                     noWrap
+                     sx={(theme) => ({
+                        fontWeight: theme.typography.fontWeightMedium,
+                        textTransform: 'capitalize',
+                     })}
+                  >
+                     feels like: {formatTempUnit(feels_like, unit)}
+                  </Typography>
+               </Box>
+               {/**TODO: Add alt tag to images */}
+               <Box
+                  sx={{
+                     width: 'clamp(7.25rem,15vw,12.5rem)',
+                  }}
+               >
+                  <img
+                     src={`http://openweathermap.org/img/wn/${currentWeather.icon}@4x.png`}
+                     style={{ width: '100%' }}
+                     alt='weather condition icon'
+                  ></img>
                </Box>
             </Box>
-         </section>
+         </Box>
       </CardBack>
    );
 }

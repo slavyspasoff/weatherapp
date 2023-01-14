@@ -9,12 +9,11 @@ function Today({}: Props) {
       <Box
          sx={(theme) => ({
             marginTop: '10vh',
-            minHeight: '92.5vh',
             width: '90%',
             maxWidth: 1200,
             marginInline: 'auto',
             display: 'grid',
-            gridTemplateColumns: '1fr',
+            gridTemplateColumns: 'auto',
             [theme.breakpoints.up('lg')]: {
                gridTemplateColumns: 'minmax(600px,1fr) 400px',
             },
