@@ -9,9 +9,9 @@ interface Props {}
 
 function CurrentConditionCard({}: Props) {
    const { data, selectedCity, unit } = useContext(ctx);
+   const isScreenSmall = useMediaQuery('(max-width:600px)');
    //TODO: Add render error or navigate to index
    if (!selectedCity || !data) return <div>No data</div>;
-   const isScreenSmall = useMediaQuery('(max-width:600px)');
    const { name, country } = selectedCity;
    const { feels_like, temp } = data.current;
    const currentWeather = data.current.weather[0];

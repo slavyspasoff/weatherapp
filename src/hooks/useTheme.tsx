@@ -4,7 +4,7 @@ import { useMediaQuery, type PaletteMode } from '@mui/material';
 interface Props {}
 
 function useTheme() {
-   const [paletteMode, setPaletteMode] = useState<PaletteMode>('light');
+   const [paletteMode, setPaletteMode] = useState<PaletteMode>('dark');
    const toggleTheme = () => {
       setPaletteMode((prev) => (prev === 'light' ? 'dark' : 'light'));
    };
